@@ -9,6 +9,10 @@ IlluminationAssessment::IlluminationAssessment(std::vector<std::vector<std::stri
 	setIlluminationClassifierData();
 }
 
+IlluminationAssessment::~IlluminationAssessment()
+{
+}
+
 void IlluminationAssessment::setIlluminationClassifierData()
 {
 	imagePool = namesAndQualityOfImages.size();
@@ -31,25 +35,20 @@ std::vector<float> IlluminationAssessment::getIlluminationMeasures(std::string &
 	std::vector<float> IlluminationMeasures;
 	//float* IlluminationMeasures = new float[3];
 	// See documentation - Illumination assessment algorithm flowchart
-	float CM1, CM2, CM3;
+	float IM1, IM2, IM3, IM4;
 
 	imgOriginal = SingletonUtilities::Instance()->ReadImage(path);
 	//imgGrayscale = convertToGrayscale(&imgOriginal);
 	//imgCropped = cropToROI(&imgGrayscale);
 
+	//calculations from those four equations in documentation. 
+
 	//imgGradient = applySobelOperator(&imgCropped);
 	//CM1 = getGradientMean(&imgGradient);
-	IlluminationMeasures.push_back(CM1);
-
-	//imgBlurred = applyMovingAverageFilter(&imgCropped, 3);
-	//imgGradient = applySobelOperator(&imgBlurred);
-	//CM2 = getGradientMean(&imgGradient);
-	IlluminationMeasures.push_back(CM2);
-
-	//imgBlurred = applyMovingAverageFilter(&imgCropped, 5);
-	//imgGradient = applySobelOperator(&imgBlurred);
-	//CM3 = getGradientMean(&imgGradient);
-	IlluminationMeasures.push_back(CM3);
+	IlluminationMeasures.push_back(IM1);
+	IlluminationMeasures.push_back(IM2);
+	IlluminationMeasures.push_back(IM3);
+	IlluminationMeasures.push_back(IM4);
 
 	// In case you need to save an image
 	//srand(time(0)); // Seed random name generator
