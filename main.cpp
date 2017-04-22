@@ -1,5 +1,6 @@
 #include "FocusAssessment.h"
 #include "SingletonUtilities.h"
+#include "ColourAssessment.h"
 
 void SetImagesNamesAndQuality(std::vector<std::vector<std::string>>*);
 int main()
@@ -8,12 +9,12 @@ int main()
 	SetImagesNamesAndQuality(&namesAndQuality);
 
 	// FOR DEBUGGING
-	std::cout << "Images paths are:\n";
+	/*std::cout << "Images paths are:\n";
 	for (int i = 0; i < namesAndQuality.size(); i++)
 	{
 		std::cout << namesAndQuality[i][o.path] << " " << namesAndQuality[i][o.quality] << std::endl;
 	}
-	std::cout << std::endl;
+	std::cout << std::endl;*/
 
 	// This constructor set classifier data automatically
 	FocusAssessment* objFocusAssessment = new FocusAssessment(namesAndQuality);
@@ -28,6 +29,16 @@ int main()
 	std::cout << "\nFocus quality of image is ";
 	focusQuality[3] == o.good ? printf("good") : focusQuality[3] == o.normal ? printf("normal") : printf("bad");
 	std::cout << std::endl;
+
+	ColourAssessment* objColourAssessment = new ColourAssessment(namesAndQuality);
+	std::vector<float> colourQuality = objColourAssessment->GetColourQuality("images/image_good.jpg");
+	delete objColourAssessment;
+
+	std::cout << "Colour measures of image are:";
+	for (int i = 0; i < 3; i++)
+	{
+		std::cout << " " << colourQuality[i];
+	}
 
 	cv::waitKey(0);
 	return(0);
