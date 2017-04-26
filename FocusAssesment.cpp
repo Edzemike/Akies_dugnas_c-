@@ -177,7 +177,7 @@ void FocusAssessment::setFocusClassifierData()
 	{
 		// Sets 3 quality numbers to vector
 		gradesOfImages.push_back(getFocusMeasures(namesAndQualityOfImages[i][o.path]));
-		std::cout << "read: " << namesAndQualityOfImages[i][0] << std::endl; // OUTPUT IS FOR DEBUGGING
+		//std::cout << "read: " << namesAndQualityOfImages[i][0] << std::endl; // OUTPUT IS FOR DEBUGGING
 	}
 }
 

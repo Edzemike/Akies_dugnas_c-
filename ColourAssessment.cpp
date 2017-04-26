@@ -14,9 +14,9 @@ ColourAssessment::~ColourAssessment()
 {
 }
 
-//void colourassessment::setcolourclassifierdata()
+//void ColourAssessment::setcolourclassifierdata()
 //{
-//	imagepool = namesandqualityofimages.size();
+//	imagePool = namesandqualityofimages.size();
 //	for (int i = 0; i < imagepool; i++)
 //	{
 //		// sets 3 quality numbers to vector
@@ -38,13 +38,10 @@ std::vector<float> ColourAssessment::getColourMeasures(std::string &path)
 		for (int y = 0; y < imgOriginal.rows; y++) {
 			cv::Vec3b colour = imgOriginal.at<cv::Vec3b>(cv::Point(x, y));
 			int averageColor = (colour.val[0] + colour.val[1] + colour.val[2]) / 3;
-			//if (colour.val[0] <= Bmax && colour.val[1] <= Bmax && colour.val[2] <= Bmax &&
-			//	colour.val[0] > Omax && colour.val[1] > Omax && colour.val[2] > Omax)
+
 			if (averageColor <= Bmax && averageColor > Omax)
 				B++;
 			else if (averageColor <= Omax && averageColor > Dmax)
-				//else if (colour.val[0] <= Omax && colour.val[1] <= Omax && colour.val[2] <= Omax &&
-				//	colour.val[0] > Dmax && colour.val[1] > Dmax && colour.val[2] > Dmax)
 				O++;
 			else if (averageColor <= Dmax && averageColor >= 0)
 				D++;

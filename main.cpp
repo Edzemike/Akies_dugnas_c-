@@ -1,6 +1,7 @@
 #include "FocusAssessment.h"
 #include "SingletonUtilities.h"
 #include "ColourAssessment.h"
+#include "IlluminationAssessment.h"
 
 void SetImagesNamesAndQuality(std::vector<std::vector<std::string>>*);
 int main()
@@ -34,11 +35,27 @@ int main()
 	std::vector<float> colourQuality = objColourAssessment->GetColourQuality("images/image_good.jpg");
 	delete objColourAssessment;
 
-	std::cout << "Colour measures of image are:";
+	IlluminationAssessment* objIlluminationAssessment = new IlluminationAssessment(namesAndQuality);
+	std::vector<float> illuminationQuality = objIlluminationAssessment->GetIlluminationQuality("images/image_good.jpg");
+	delete objIlluminationAssessment;
+
+	
+	std::cout << "Quality measures of image are:" << std::endl;
+	for (int i = 0; i < 3; i++)
+	{
+		std::cout << " " << focusQuality[i];
+	}
+	std::cout << std::endl;
 	for (int i = 0; i < 3; i++)
 	{
 		std::cout << " " << colourQuality[i];
 	}
+	std::cout << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		std::cout << " " << illuminationQuality[i];
+	}
+	std::cout << std::endl;
 
 	cv::waitKey(0);
 	return(0);

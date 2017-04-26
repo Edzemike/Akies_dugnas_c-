@@ -27,13 +27,5 @@ private:
 	std::vector<std::vector<float>> gradesOfImages;
 
 	void setIlluminationClassifierData();
-	void mostMatchesInNearest(std::vector<std::vector<float>>&, std::vector<float>&, int);
-	void setDistancesFromOriginal(std::vector<std::vector<float>>&, std::vector<float>&);
 	std::vector<float> getIlluminationMeasures(std::string&);
-	double getGradientMean(cv::Mat*);
-	cv::Mat applyMovingAverageFilter(cv::Mat*, int);
-	//cv::Mat readImage(std::string);
-	cv::Mat convertToGrayscale(cv::Mat*);
-	cv::Mat applySobelOperator(cv::Mat*);
-	cv::Mat cropToROI(cv::Mat*);
 };

@@ -25,6 +25,7 @@ public:
 private:
 	int imagePool;
 	int Bmax = 255, Omax = 170, Dmax = 85;
+	void ColourAssessment::setcolourclassifierdata();
 	std::vector<std::vector<std::string>> namesAndQualityOfImages;
 	std::vector<std::vector<float>> gradesOfImages;
 //	void setColourClassifierData();
