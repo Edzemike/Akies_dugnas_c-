@@ -117,6 +117,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ColourAssessment.cpp" />
+    <ClCompile Include="ContrastAssesment.cpp" />
     <ClCompile Include="FocusAssesment.cpp" />
     <ClCompile Include="IlluminationAssessment.cpp" />
     <ClCompile Include="main.cpp" />
@@ -124,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ColourAssessment.h" />
+    <ClInclude Include="ContrastAssesment.h" />
     <ClInclude Include="FocusAssessment.h" />
     <ClInclude Include="IlluminationAssessment.h" />
     <ClInclude Include="SingletonUtilities.h" />

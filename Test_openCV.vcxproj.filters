@@ -30,6 +30,9 @@
     <ClCompile Include="ColourAssessment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ContrastAssesment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FocusAssessment.h">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ColourAssessment.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ContrastAssesment.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

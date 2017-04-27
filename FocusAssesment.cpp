@@ -81,20 +81,20 @@ std::vector<float> FocusAssessment::getFocusMeasures(std::string &path)
 	float FM1, FM2, FM3, fm2, fm3;
 
 	imgOriginal = SingletonUtilities::Instance()->ReadImage(path);
-	imgGrayscale = convertToGrayscale(&imgOriginal);
-	imgCropped = SingletonUtilities::Instance()->CropToROI(&imgGrayscale);
+	imgCropped = SingletonUtilities::Instance()->CropToROI(&imgOriginal);
+	imgGrayscale = convertToGrayscale(&imgCropped);
 
-	imgGradient = applySobelOperator(&imgCropped);
+	imgGradient = applySobelOperator(&imgGrayscale);
 	FM1 = getGradientMean(&imgGradient);
 	focusMeasures.push_back(FM1);
 
-	imgBlurred = SingletonUtilities::Instance()->ApplyMovingAverageFilter(&imgOriginal, 3);
+	imgBlurred = SingletonUtilities::Instance()->ApplyMovingAverageFilter(&imgGrayscale, 3);
 	imgGradient = applySobelOperator(&imgBlurred);
 	fm2 = getGradientMean(&imgGradient);
 	FM2 = FM1 - fm2;
 	focusMeasures.push_back(FM2);
 
-	imgBlurred = SingletonUtilities::Instance()->ApplyMovingAverageFilter(&imgOriginal, 5);
+	imgBlurred = SingletonUtilities::Instance()->ApplyMovingAverageFilter(&imgGrayscale, 5);
 	imgGradient = applySobelOperator(&imgBlurred);
 	fm3 = getGradientMean(&imgGradient);
 	FM3 = fm2 - fm3;
