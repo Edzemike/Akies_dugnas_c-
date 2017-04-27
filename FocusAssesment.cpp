@@ -14,17 +14,6 @@ FocusAssessment::~FocusAssessment()
 {
 }
 
-cv::Mat FocusAssessment::applyMovingAverageFilter(cv::Mat *imgGrayscale, int filterSize) // Blures
-{
-	// note: don't put the same matrix in destination (to)
-	// or it (original) will get blurred
-	cv::Mat imgBlurred;
-	//		from			to					  x			   y
-	blur(*imgGrayscale, imgBlurred, cv::Size(filterSize, filterSize));
-
-	return imgBlurred;
-}
-
 /*cv::Mat FocusAssessment::readImage(std::string path)
 {
 	cv::Mat imgOriginal;
@@ -144,13 +133,13 @@ std::vector<float> FocusAssessment::getFocusMeasures(std::string &path)
 	FM1 = getGradientMean(&imgGradient);
 	focusMeasures.push_back(FM1);
 
-	imgBlurred = applyMovingAverageFilter(&imgCropped, 3);
+	imgBlurred = SingletonUtilities::ApplyMovingAverageFilter(&imgOriginal, 3);
 	imgGradient = applySobelOperator(&imgBlurred);
 	fm2 = getGradientMean(&imgGradient);
 	FM2 = FM1 - fm2;
 	focusMeasures.push_back(FM2);
 
-	imgBlurred = applyMovingAverageFilter(&imgCropped, 5);
+	imgBlurred = SingletonUtilities::ApplyMovingAverageFilter(&imgOriginal, 5);
 	imgGradient = applySobelOperator(&imgBlurred);
 	fm3 = getGradientMean(&imgGradient);
 	FM3 = fm2 - fm3;

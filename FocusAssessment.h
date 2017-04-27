@@ -33,7 +33,6 @@ private:
 	void setDistancesFromOriginal(std::vector<std::vector<float>>&, std::vector<float>&);
 	std::vector<float> getFocusMeasures(std::string&);
 	double getGradientMean(cv::Mat*);
-	cv::Mat applyMovingAverageFilter(cv::Mat*, int);
 	//cv::Mat readImage(std::string);
 	cv::Mat convertToGrayscale(cv::Mat*);
 	cv::Mat applySobelOperator(cv::Mat*);
