@@ -73,6 +73,51 @@ cv::Mat SingletonUtilities::ReadImage(std::string path)
 	return imgOriginal;
 }
 
+cv::Mat SingletonUtilities::CropToROI(cv::Mat *imgGrayscale)
+{
+	cv::Rect ROI; // Region of interest
+	cv::Mat imgCropped;
+	int xmin = imgGrayscale->cols;
+	int ymin = imgGrayscale->rows;
+	int xmax = 0;
+	int ymax = 0;
+
+	// Go through all pixels
+	for (int x = 0; x < imgGrayscale->cols; x++)
+	{
+		for (int y = 0; y < imgGrayscale->rows; y++)
+		{
+			float pixel = imgGrayscale->at<uchar>(y, x);
+
+			// If pixel is black (not part of ROI),
+			// we set boundaries to that point.
+			if (pixel == 0)
+			{
+				if (x < xmin)
+				{
+					xmin = x;
+				}
+				if (y < ymin)
+				{
+					ymin = y;
+				}
+				if (x > xmax)
+				{
+					xmax = x;
+				}
+				if (y > ymax)
+				{
+					ymax = y;
+				}
+			}
+		}
+	}
+
+	ROI = cv::Rect(xmin, ymin, xmax - xmin, ymax - ymin);
+	imgCropped = cv::Mat(*imgGrayscale, ROI);
+	return imgCropped;
+}
+
 void SingletonUtilities::DisplayImage(std::string name, cv::Mat *image)
 {
 	// note: you can use CV_WINDOW_NORMAL which allows resizing the window

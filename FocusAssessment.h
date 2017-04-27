@@ -36,5 +36,4 @@ private:
 	//cv::Mat readImage(std::string);
 	cv::Mat convertToGrayscale(cv::Mat*);
 	cv::Mat applySobelOperator(cv::Mat*);
-	cv::Mat cropToROI(cv::Mat*);
 };

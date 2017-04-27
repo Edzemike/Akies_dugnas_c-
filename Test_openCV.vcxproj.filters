@@ -24,12 +24,24 @@
     <ClCompile Include="SingletonUtilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IlluminationAssessment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ColourAssessment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FocusAssessment.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="SingletonUtilities.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IlluminationAssessment.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ColourAssessment.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

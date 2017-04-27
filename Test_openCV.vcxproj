@@ -116,12 +116,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ColourAssessment.cpp" />
     <ClCompile Include="FocusAssesment.cpp" />
+    <ClCompile Include="IlluminationAssessment.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SingletonUtilities.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ColourAssessment.h" />
     <ClInclude Include="FocusAssessment.h" />
+    <ClInclude Include="IlluminationAssessment.h" />
     <ClInclude Include="SingletonUtilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

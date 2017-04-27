@@ -67,51 +67,6 @@ cv::Mat FocusAssessment::applySobelOperator(cv::Mat *imgGrayscale) // Sobel oper
 	return imgGradient;
 }
 
-cv::Mat FocusAssessment::cropToROI(cv::Mat *imgGrayscale)
-{
-	cv::Rect ROI; // Region of interest
-	cv::Mat imgCropped;
-	int xmin = imgGrayscale->cols;
-	int ymin = imgGrayscale->rows;
-	int xmax = 0;
-	int ymax = 0;
-
-	// Go through all pixels
-	for (int x = 0; x < imgGrayscale->cols; x++)
-	{
-		for (int y = 0; y < imgGrayscale->rows; y++)
-		{
-			float pixel = imgGrayscale->at<uchar>(y, x);
-
-			// If pixel is black (not part of ROI),
-			// we set boundaries to that point.
-			if (pixel == 0)
-			{
-				if (x < xmin)
-				{
-					xmin = x;
-				}
-				if (y < ymin)
-				{
-					ymin = y;
-				}
-				if (x > xmax)
-				{
-					xmax = x;
-				}
-				if (y > ymax)
-				{
-					ymax = y;
-				}
-			}
-		}
-	}
-
-	ROI = cv::Rect(xmin, ymin, xmax - xmin, ymax - ymin);
-	imgCropped = cv::Mat(*imgGrayscale, ROI);
-	return imgCropped;
-}
-
 std::vector<float> FocusAssessment::getFocusMeasures(std::string &path)
 {
 	cv::Mat imgOriginal;
@@ -127,19 +82,19 @@ std::vector<float> FocusAssessment::getFocusMeasures(std::string &path)
 
 	imgOriginal = SingletonUtilities::Instance()->ReadImage(path);
 	imgGrayscale = convertToGrayscale(&imgOriginal);
-	imgCropped = cropToROI(&imgGrayscale);
+	imgCropped = SingletonUtilities::Instance()->CropToROI(&imgGrayscale);
 
 	imgGradient = applySobelOperator(&imgCropped);
 	FM1 = getGradientMean(&imgGradient);
 	focusMeasures.push_back(FM1);
 
-	imgBlurred = SingletonUtilities::ApplyMovingAverageFilter(&imgOriginal, 3);
+	imgBlurred = SingletonUtilities::Instance()->ApplyMovingAverageFilter(&imgOriginal, 3);
 	imgGradient = applySobelOperator(&imgBlurred);
 	fm2 = getGradientMean(&imgGradient);
 	FM2 = FM1 - fm2;
 	focusMeasures.push_back(FM2);
 
-	imgBlurred = SingletonUtilities::ApplyMovingAverageFilter(&imgOriginal, 5);
+	imgBlurred = SingletonUtilities::Instance()->ApplyMovingAverageFilter(&imgOriginal, 5);
 	imgGradient = applySobelOperator(&imgBlurred);
 	fm3 = getGradientMean(&imgGradient);
 	FM3 = fm2 - fm3;

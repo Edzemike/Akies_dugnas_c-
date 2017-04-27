@@ -29,7 +29,7 @@ std::vector<float> IlluminationAssessment::getIlluminationMeasures(std::string &
 	cv::Mat imgOriginal;
 	cv::Mat imgBlurred;
 	imgOriginal = SingletonUtilities::Instance()->ReadImage(path);
-	imgBlurred = SingletonUtilities::ApplyMovingAverageFilter(&imgOriginal, 3);
+	imgBlurred = SingletonUtilities::Instance()->ApplyMovingAverageFilter(&imgOriginal, 3);
 	
 
 	std::vector<float> illuminationMeasures;
