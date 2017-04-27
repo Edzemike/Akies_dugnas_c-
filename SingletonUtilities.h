@@ -41,7 +41,7 @@ public:
 	void SaveImage(std::string, cv::Mat*);
 	void DisplayImage(std::string, cv::Mat*);
 	cv::Mat ReadImage(std::string);
-	cv::Mat static SingletonUtilities::applyMovingAverageFilter(cv::Mat *imgGrayscale, int filterSize);
+	cv::Mat static SingletonUtilities::ApplyMovingAverageFilter(cv::Mat *imgGrayscale, int filterSize);
 
 private:
 	int imagePool; // Don't mess this up (can be 1-10) helps to read images

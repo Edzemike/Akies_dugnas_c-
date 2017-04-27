@@ -81,7 +81,7 @@ void SingletonUtilities::DisplayImage(std::string name, cv::Mat *image)
 	cv::imshow(name, *image);
 }
 
-cv::Mat SingletonUtilities::applyMovingAverageFilter(cv::Mat *imgGrayscale, int filterSize) // Blures
+cv::Mat SingletonUtilities::ApplyMovingAverageFilter(cv::Mat *imgGrayscale, int filterSize) // Blures
 {
 	// note: don't put the same matrix in destination (to)
 	// or it (original) will get blurred
