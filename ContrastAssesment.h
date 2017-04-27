@@ -17,5 +17,7 @@ private:
 
 	void setContrastClassifierData();
 	void applyColorMap();
+	void setPixelPercentageWithinBin(int*, int*, std::vector<float>&, std::vector<int>&);
+	void getPixelCount(cv::Mat*, std::vector<int>&);
 	std::vector<float> getContrastMeasures(std::string&);
 };*/

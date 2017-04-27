@@ -148,8 +148,7 @@ void FocusAssessment::mostMatchesInNearest(std::vector<std::vector<float>> &dist
 			count_bad++;
 		}
 	}
-	//CAN BE OPTIMIZED
-	std::cout << "good = " << count_good << " bad = " << count_bad << " normal = " << count_normal << std::endl; // THIS IS FOR DEBUGGING
+	// CAN BE OPTIMIZED
 	if (count_good > count_bad && count_good > count_normal)
 	{
 		focusMeasures.push_back(o.good);
@@ -198,7 +197,8 @@ std::vector<float> FocusAssessment::GetFocusQuality(std::string path) // FIX ME
 	std::vector<float> focusMeasures = getFocusMeasures(path);
 
 	// Sort the distances vector
-	std::sort(distances.begin(), distances.end(), [](const std::vector<float>& a, const std::vector<float>& b) { return a[1] > b[1]; });
+	std::sort(distances.begin(), distances.end(), [](const std::vector<float>& a, const std::vector<float>& b) { return a[0] < b[0]; });
+
 	// Sets the distances
 	setDistancesFromOriginal(distances, focusMeasures);
 
