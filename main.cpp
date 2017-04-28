@@ -2,12 +2,24 @@
 #include "SingletonUtilities.h"
 #include "ColourAssessment.h"
 #include "IlluminationAssessment.h"
+#include "ContrastAssesment.h"
 
 void SetImagesNamesAndQuality(std::vector<std::vector<std::string>>*);
 int main()
 {
 	std::vector<std::vector<std::string>> namesAndQuality;
 	SetImagesNamesAndQuality(&namesAndQuality);
+
+	ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndQuality);
+	std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality("images/image_normal.jpg");
+	delete objContrastAssessment;
+
+	std::cout << "Contrast quality measures of image are:" << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		std::cout << " " << contrastQuality[i];
+	}
+	std::cout << std::endl;
 
 	// FOR DEBUGGING
 	/*std::cout << "Images paths are:\n";

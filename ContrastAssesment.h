@@ -2,7 +2,7 @@
 
 #include "SingletonUtilities.h"
 
-/*class ContrastAssesment
+class ContrastAssesment
 {
 public:
 	ContrastAssesment();
@@ -20,4 +20,4 @@ private:
 	void setPixelPercentageWithinBin(int*, int*, std::vector<float>&, std::vector<int>&);
 	void getPixelCount(cv::Mat*, std::vector<int>&);
 	std::vector<float> getContrastMeasures(std::string&);
-};*/
+};

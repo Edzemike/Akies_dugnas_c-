@@ -1,6 +1,6 @@
 #include "ContrastAssesment.h"
 
-/*ContrastAssesment::ContrastAssesment()
+ContrastAssesment::ContrastAssesment()
 {
 }
 
@@ -16,13 +16,20 @@ ContrastAssesment::~ContrastAssesment()
 
 void ContrastAssesment::setContrastClassifierData()
 {
-
+	imagePool = namesAndQualityOfImages.size();
+	for (int i = 0; i < imagePool; i++)
+	{
+		// Sets 4 quality numbers to vector
+		gradesOfImages.push_back(getContrastMeasures(namesAndQualityOfImages[i][o.path]));
+		std::cout << "read: " << namesAndQualityOfImages[i][0] << std::endl; // OUTPUT IS FOR DEBUGGING
+	}
 }
 
 std::vector<float> ContrastAssesment::GetContrastQuality(std::string path)
 {
 	// Get given image's contrast measures
 	std::vector<float> contrastMeasures = getContrastMeasures(path);
+
 	return contrastMeasures;
 }
 
@@ -39,7 +46,7 @@ std::vector<float> ContrastAssesment::getContrastMeasures(std::string &path)
 	int CtM3 = 0;
 	// Size of bin
 	int bin = 16;
-	int totalPixels = imgBlurred.total();
+	int totalPixels;
 	std::vector<int> pixelCount(256); // initializes with 0
 	std::vector<float> pixelPercentageWithinBin(bin);
 	std::vector<float> contrastMeasures;
@@ -54,6 +61,7 @@ std::vector<float> ContrastAssesment::getContrastMeasures(std::string &path)
 	// Should have 1 dimension
 	cv::cvtColor(imgOriginal, imgColorMap, CV_BGR2GRAY); // Grayscale. Should be ColorMap function.
 	imgCropped = SingletonUtilities::Instance()->CropToROI(&imgColorMap);
+	totalPixels = imgCropped.total();
 
 	// Count with original image
 	getPixelCount(&imgCropped, pixelCount);
@@ -71,7 +79,11 @@ std::vector<float> ContrastAssesment::getContrastMeasures(std::string &path)
 
 	// Count with blurred image
 	imgBlurred = SingletonUtilities::Instance()->ApplyMovingAverageFilter(&imgCropped, 3);
+	// Set pixelCount to zero
+	std::fill(pixelCount.begin(), pixelCount.end(), 0);
 	getPixelCount(&imgBlurred, pixelCount);
+	// Set pixelPercentageWithinBin to zero
+	std::fill(pixelPercentageWithinBin.begin(), pixelPercentageWithinBin.end(), 0);
 	setPixelPercentageWithinBin(&bin, &totalPixels, pixelPercentageWithinBin, pixelCount);
 	for (int i = 0; i < bin; i++)
 	{
@@ -122,4 +134,4 @@ void ContrastAssesment::applyColorMap()
 	imgOriginal = SingletonUtilities::Instance()->ReadImage("images/image_girl.jpg");
 	// Applies standard COLORMAP_AUTUMN
 	cv::applyColorMap(imgOriginal, imgColorMap, cv::COLORMAP_AUTUMN);
-}*/
+}
