@@ -143,7 +143,7 @@ void FocusAssessment::mostMatchesInNearest(std::vector<std::vector<float>> &dist
 			count_normal++;
 			continue;
 		}
-		if (distances[i][o.bad] == o.bad)
+		if (distances[i][o.quality] == o.bad)
 		{
 			count_bad++;
 		}
@@ -196,11 +196,11 @@ std::vector<float> FocusAssessment::GetFocusQuality(std::string path) // FIX ME
 	// Get given image's focus measures
 	std::vector<float> focusMeasures = getFocusMeasures(path);
 
-	// Sort the distances vector
-	std::sort(distances.begin(), distances.end(), [](const std::vector<float>& a, const std::vector<float>& b) { return a[0] < b[0]; });
-
 	// Sets the distances
 	setDistancesFromOriginal(distances, focusMeasures);
+
+	// Sort the distances vector
+	std::sort(distances.begin(), distances.end(), [](const std::vector<float>& a, const std::vector<float>& b) { return a[0] < b[0]; });
 
 	// Searches in 5 nearest images and push_back to focusMeasures the answer (quality of image)
 	mostMatchesInNearest(distances, focusMeasures, 5);
