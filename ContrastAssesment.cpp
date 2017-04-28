@@ -27,10 +27,93 @@ void ContrastAssesment::setContrastClassifierData()
 
 std::vector<float> ContrastAssesment::GetContrastQuality(std::string path)
 {
+	std::vector<std::vector<float>> distances;
+
 	// Get given image's contrast measures
 	std::vector<float> contrastMeasures = getContrastMeasures(path);
 
+	// Sets the distances
+	setDistancesFromOriginal(distances, contrastMeasures);
+
+	// Sort the distances vector
+	std::sort(distances.begin(), distances.end(), [](const std::vector<float>& a, const std::vector<float>& b) { return a[0] < b[0]; });
+
+	// Searches in 5 nearest images and push_back to contrastMeasures the answer (quality of image)
+	mostMatchesInNearest(distances, contrastMeasures, 5);
+
 	return contrastMeasures;
+}
+
+// MAKE IT WORK
+void ContrastAssesment::mostMatchesInNearest(std::vector<std::vector<float>> &distances, std::vector<float> &focusMeasures, int nearestPool) // FIX ME
+{
+	int count_good = 0;
+	int count_normal = 0;
+	int count_bad = 0;
+	// Most matches from image groups in nearest dots (nearestPool)
+	for (int i = 0; i < nearestPool; i++)
+	{
+		if (distances[i][o.quality] == o.good)
+		{
+			count_good++;
+			continue;
+		}
+		if (distances[i][o.quality] == o.normal)
+		{
+			count_normal++;
+			continue;
+		}
+		if (distances[i][o.quality] == o.bad)
+		{
+			count_bad++;
+		}
+	}
+	// CAN BE OPTIMIZED
+	if (count_good > count_bad && count_good > count_normal)
+	{
+		focusMeasures.push_back(o.good);
+	}
+	else if (count_normal > count_good && count_normal > count_bad)
+	{
+		focusMeasures.push_back(o.normal);
+	}
+	else if (count_bad > count_good && count_bad > count_normal)
+	{
+		focusMeasures.push_back(o.bad);
+	}
+	else
+	{
+		std::cout << "error: two classifiers are at the same distance\n";
+		_getch();
+		exit(EXIT_FAILURE);
+	}
+}
+
+void ContrastAssesment::setDistancesFromOriginal(std::vector<std::vector<float>> &distances, std::vector<float> &original)
+{
+	// Goes through all pictures
+	for (int i = 0; i < imagePool; i++)
+	{
+		//if (original[o.CtM2] == original[o.CtM3])
+		//{
+			// distance = (x11-x21)^2+(y12-y22)^2
+			distances.push_back({
+				pow((original[o.CtM1] - gradesOfImages[i][o.CtM1]), 2) +
+				pow((original[o.CtM4] - gradesOfImages[i][o.CtM4]), 2) });
+		//}
+		//else
+		//{
+			// If CtM2 != CtM3 focus is bad, so set distances to 0
+			//std::fill(distances[i].begin(), distances[i].end(), 0);
+		//}
+
+		if (namesAndQualityOfImages[i][o.quality] == "good")
+			distances[i].push_back(o.good);
+		else if (namesAndQualityOfImages[i][o.quality] == "normal")
+			distances[i].push_back(o.normal);
+		else if (namesAndQualityOfImages[i][o.quality] == "bad")
+			distances[i].push_back(o.bad);
+	}
 }
 
 std::vector<float> ContrastAssesment::getContrastMeasures(std::string &path)

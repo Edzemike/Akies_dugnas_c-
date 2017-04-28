@@ -10,7 +10,7 @@ int main()
 	std::vector<std::vector<std::string>> namesAndQuality;
 	SetImagesNamesAndQuality(&namesAndQuality);
 
-	ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndQuality);
+	/*ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndQuality);
 	std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality("images/image_normal.jpg");
 	delete objContrastAssessment;
 
@@ -19,6 +19,21 @@ int main()
 	{
 		std::cout << " " << contrastQuality[i];
 	}
+	std::cout << std::endl;*/
+
+
+	// This constructor sets classifier data automatically
+	ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndQuality);
+	std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality("images/image_normal.jpg");
+	delete objContrastAssessment;
+
+	std::cout << "Contrast measures of image are:";
+	for (int i = 0; i < 4; i++)
+	{
+		std::cout << " " << contrastQuality[i];
+	}
+	std::cout << "\nContrast quality of image is ";
+	contrastQuality[4] == o.good ? printf("good") : contrastQuality[4] == o.normal ? printf("normal") : printf("bad");
 	std::cout << std::endl;
 
 	// FOR DEBUGGING
@@ -29,7 +44,7 @@ int main()
 	}
 	std::cout << std::endl;*/
 
-	// This constructor set classifier data automatically
+	// This constructor sets classifier data automatically
 	FocusAssessment* objFocusAssessment = new FocusAssessment(namesAndQuality);
 	std::vector<float> focusQuality = objFocusAssessment->GetFocusQuality("images/image_bad.jpg");
 	delete objFocusAssessment;
@@ -52,6 +67,11 @@ int main()
 	delete objIlluminationAssessment;
 	
 	std::cout << "Quality measures of image are:" << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		std::cout << " " << contrastQuality[i];
+	}
+	std::cout << std::endl;
 	for (int i = 0; i < 3; i++)
 	{
 		std::cout << " " << focusQuality[i];

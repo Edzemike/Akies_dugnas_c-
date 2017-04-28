@@ -19,5 +19,7 @@ private:
 	void applyColorMap();
 	void setPixelPercentageWithinBin(int*, int*, std::vector<float>&, std::vector<int>&);
 	void getPixelCount(cv::Mat*, std::vector<int>&);
+	void setDistancesFromOriginal(std::vector<std::vector<float>>&, std::vector<float>&);
+	void mostMatchesInNearest(std::vector<std::vector<float>>&, std::vector<float>&, int);
 	std::vector<float> getContrastMeasures(std::string&);
 };

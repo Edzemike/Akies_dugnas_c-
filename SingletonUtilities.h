@@ -29,6 +29,11 @@ static struct o
 	const int FM3 = 2;
 	// Distance from original
 	const int distance = 0;
+	// Contrast measures
+	const int CtM1 = 0;
+	const int CtM2 = 1;
+	const int CtM3 = 2;
+	const int CtM4 = 3;
 } o;
 
 class SingletonUtilities
