@@ -22,6 +22,8 @@ void ContrastAssesment::setContrastClassifierData()
 		// Sets 4 quality numbers to vector
 		gradesOfImages.push_back(getContrastMeasures(namesAndQualityOfImages[i][o.path]));
 		std::cout << "read: " << namesAndQualityOfImages[i][0] << std::endl; // OUTPUT IS FOR DEBUGGING
+		//std::cout << "measures: " << gradesOfImages[i][0] << " " << gradesOfImages[i][1] << " " << gradesOfImages[i][2] << " " << gradesOfImages[i][3] << " " << std::endl; // OUTPUT IS FOR DEBUGGING
+		//std::cout << "diff: " << abs(gradesOfImages[i][0] - gradesOfImages[i][3]) << std::endl;
 	}
 }
 
@@ -68,6 +70,7 @@ void ContrastAssesment::mostMatchesInNearest(std::vector<std::vector<float>> &di
 			count_bad++;
 		}
 	}
+
 	// CAN BE OPTIMIZED
 	if (count_good > count_bad && count_good > count_normal)
 	{
@@ -97,9 +100,9 @@ void ContrastAssesment::setDistancesFromOriginal(std::vector<std::vector<float>>
 		//if (original[o.CtM2] == original[o.CtM3])
 		//{
 			// distance = (x11-x21)^2+(y12-y22)^2
-			distances.push_back({
-				pow((original[o.CtM1] - gradesOfImages[i][o.CtM1]), 2) +
-				pow((original[o.CtM4] - gradesOfImages[i][o.CtM4]), 2) });
+		distances.push_back({
+			pow((original[o.CtM1] - gradesOfImages[i][o.CtM1]), 2) +
+			pow((original[o.CtM4] - gradesOfImages[i][o.CtM4]), 2) });
 		//}
 		//else
 		//{
