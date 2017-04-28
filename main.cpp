@@ -7,33 +7,8 @@
 void SetImagesNamesAndQuality(std::vector<std::vector<std::string>>*);
 int main()
 {
-	std::vector< std::vector< int > > myVector({ { 3,4,3 },{ 2,5,2 },{ 1,6,1 },{ 5,6,1 } });
-	std::sort(myVector.begin(), myVector.end(), [](const std::vector< int >& a, const std::vector< int >& b) { return a[0] < b[0]; });
-
-	std::cout << "{";
-	for (auto i : myVector) {
-		std::cout << "[";
-		for (auto j : i)
-			std::cout << j << ",";
-		std::cout << "],";
-	}
-	std::cout << "}" << std::endl;
-
-
 	std::vector<std::vector<std::string>> namesAndQuality;
 	SetImagesNamesAndQuality(&namesAndQuality);
-
-	/*ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndQuality);
-	std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality("images/image_normal.jpg");
-	delete objContrastAssessment;
-
-	std::cout << "Contrast quality measures of image are:" << std::endl;
-	for (int i = 0; i < 4; i++)
-	{
-		std::cout << " " << contrastQuality[i];
-	}
-	std::cout << std::endl;*/
-
 
 	// This constructor sets classifier data automatically
 	ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndQuality);

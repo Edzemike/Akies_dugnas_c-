@@ -1,10 +1,16 @@
 #include "ContrastAssesment.h"
 
 ContrastAssesment::ContrastAssesment()
+/**
+*Empty constructor
+*/
 {
 }
 
 ContrastAssesment::ContrastAssesment(std::vector<std::vector<std::string>> &data)
+/**
+*This constructor sets classifier data automatically
+*/
 {
 	namesAndQualityOfImages = data;
 	setContrastClassifierData();
