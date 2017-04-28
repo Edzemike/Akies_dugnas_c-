@@ -6,6 +6,9 @@
 void SetImagesNamesAndQuality(std::vector<std::vector<std::string>>*);
 int main()
 {
+	std::vector<std::vector<std::string>> namesAndQuality;
+	SetImagesNamesAndQuality(&namesAndQuality);
+
 	// FOR DEBUGGING
 	/*std::cout << "Images paths are:\n";
 	for (int i = 0; i < namesAndQuality.size(); i++)
