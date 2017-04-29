@@ -3,9 +3,9 @@
 IlluminationAssessment::IlluminationAssessment(std::string imagePath)
 {
 }
-IlluminationAssessment::IlluminationAssessment(std::vector<std::vector<std::string>> &data)
+IlluminationAssessment::IlluminationAssessment(std::vector<std::string> &data)
 {
-	namesAndQualityOfImages = data;
+	namesOfImages = data;
 	setIlluminationClassifierData();
 }
 
@@ -15,12 +15,14 @@ IlluminationAssessment::~IlluminationAssessment()
 
 void IlluminationAssessment::setIlluminationClassifierData()
 {
-	imagePool = namesAndQualityOfImages.size();
+	imagePool = namesOfImages.size();
 	for (int i = 0; i < imagePool; i++)
 	{
 		// Sets 3 quality numbers to vector
-		gradesOfImages.push_back(getIlluminationMeasuresBGR(namesAndQualityOfImages[i][o.path]));
-		//std::cout << "read: " << namesAndQualityOfImages[i][0] << std::endl; // OUTPUT IS FOR DEBUGGING
+		gradesOfImages.push_back(getIlluminationMeasuresBGR("./images/Illumination/" + namesOfImages[i]));
+		std::cout << "read: " << namesOfImages[i] << std::endl; // OUTPUT IS FOR DEBUGGING
+		std::cout << gradesOfImages[i][0] << " " << gradesOfImages[i][1] << " " << gradesOfImages[i][2] << " " << gradesOfImages[i][3] << " " << std::endl;
+
 	}
 }
 

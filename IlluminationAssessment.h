@@ -17,13 +17,13 @@
 class IlluminationAssessment {
 public:
 	IlluminationAssessment(std::string);
-	IlluminationAssessment(std::vector<std::vector<std::string>>&);
+	IlluminationAssessment(std::vector<std::string>&);
 	~IlluminationAssessment();
 	std::vector<float> GetIlluminationQuality(std::string);
 
 private:
 	int imagePool;
-	std::vector<std::vector<std::string>> namesAndQualityOfImages;
+	std::vector<std::string> namesOfImages;
 	std::vector<std::vector<float>> gradesOfImages;
 
 	void setIlluminationClassifierData();
