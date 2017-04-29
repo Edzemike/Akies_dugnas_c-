@@ -4,26 +4,31 @@ ColourAssessment::ColourAssessment(std::string imagePath)
 {
 }
 
-ColourAssessment::ColourAssessment(std::vector<std::vector<std::string>> &data)
+ColourAssessment::ColourAssessment(std::vector<std::string> &data)
 {
-	namesAndQualityOfImages = data;
-//	setColourClassifierData();
+	namesOfImages = data;
+	std::cout << namesOfImages[0] << namesOfImages[1] << namesOfImages[2] << std::endl; // OK
+	setColourClassifierData(namesOfImages);
 }
 
 ColourAssessment::~ColourAssessment()
 {
 }
 
-//void ColourAssessment::setcolourclassifierdata()
-//{
-//	imagePool = namesandqualityofimages.size();
-//	for (int i = 0; i < imagepool; i++)
-//	{
-//		// sets 3 quality numbers to vector
-//		gradesofimages.push_back(getcolourmeasures(namesandqualityofimages[i][o.path]));
-//		std::cout << "read: " << namesandqualityofimages[i][0] << std::endl; // output is for debugging
-//	}
-//}
+void ColourAssessment::setColourClassifierData(std::vector<std::string> namesOfImages)
+{
+	std::ofstream output;
+	output.open("./images/Colour/parameters.txt");
+	imagePool = namesOfImages.size();
+	for (int i = 0; i < imagePool; i++)
+	{
+		// sets 3 quality numbers to vector
+		gradesOfImages.push_back(getColourMeasuresHSV("./images/Colour/"+namesOfImages[i]));
+		std::cout << "read: " << namesOfImages[i] << std::endl; // output is for debugging
+		output << gradesOfImages[i][0] << " " << gradesOfImages[i][1] << " " << gradesOfImages[i][2] << " " << namesOfImages[i] << std::endl;
+	}
+	output.close();
+}
 
 std::vector<float> ColourAssessment::getColourMeasuresBGR(std::string &path)
 {
@@ -74,6 +79,7 @@ std::vector<float> ColourAssessment::getColourMeasuresBGR(std::string &path)
 
 std::vector<float> ColourAssessment::getColourMeasuresHSV(std::string &path)
 {
+
 	cv::Mat imgOriginal;
 	std::vector<float> ColourMeasures;
 	float CM1, CM2, CM3;
@@ -140,4 +146,28 @@ std::vector<float> ColourAssessment::GetColourQuality(std::string path, int alg)
 	//mostMatchesInNearest(distances, ColourMeasures, 5);
 
 	return ColourMeasures;
+}
+
+std::string ColourAssessment::getColourQuality(std::vector<float> mesurements)
+{
+	std::string quality = "please show some exaples of bright dark and normal";
+	std::ifstream parameters;
+	float a, b, c, l1 = 1, l2 = 1, l3 = 1;
+	std::string s;
+	parameters.open("./images/Colour/parameters.txt");
+	while (true)
+	{
+		parameters >> a;
+		parameters >> b;
+		parameters >> c;
+		parameters >> s;
+		l2 = sqrt(pow((a - mesurements[0]), 2) + pow((b - mesurements[1]), 2) + pow((c - mesurements[2]), 2));
+		std::cout << "l2: " << a << std::endl;
+		if (l2 < l1) {
+			l1 = l2;
+			quality = s;
+		}
+		if (parameters.eof()) break;
+	}
+	return quality;
 }
