@@ -5,6 +5,7 @@
 #include "ContrastAssesment.h"
 
 void SetImagesNamesAndQualityFocus(std::vector<std::vector<std::string>>*);
+
 int main()
 {
 	std::vector<std::vector<std::string>> namesAndQuality;
@@ -37,7 +38,7 @@ int main()
 	FocusAssessment* objFocusAssessment = new FocusAssessment(namesAndQuality);
 	std::vector<float> focusQuality = objFocusAssessment->GetFocusQuality("images/image_bad.jpg");
 	delete objFocusAssessment;
-
+	
 	std::cout << "Focus measures of image are:";
 	for (int i = 0; i < 3; i++)
 	{
@@ -48,15 +49,17 @@ int main()
 	std::cout << std::endl;
 	
 	std::cout << "start color\n";
-
-	ColourAssessment* objColourAssessment = new ColourAssessment(namesAndQuality);
-	std::vector<float> colourQuality = objColourAssessment->GetColourQuality("images/image_good.jpg", 0);
+	std::vector<std::string> imageNamesColour = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Colour");
+	ColourAssessment* objColourAssessment = new ColourAssessment(imageNamesColour);
+	std::vector<float> colourQuality = objColourAssessment->GetColourQuality("images/image3.jpg", 0);
+	std::cout << "quality of color mostly resembles: " << objColourAssessment->getColourQuality(colourQuality);
 	delete objColourAssessment;
 
-	std::cout << "start ill\n";
-	IlluminationAssessment* objIlluminationAssessment = new IlluminationAssessment(namesAndQuality);
+	std::cout << "\nstart ill\n";
+	std::vector<std::string> imageNamesIllumination = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Illumination");
+	IlluminationAssessment* objIlluminationAssessment = new IlluminationAssessment(imageNamesIllumination);
 	std::vector<float> illuminationQuality = objIlluminationAssessment->GetIlluminationQuality("images/image_good.jpg");
-	delete objIlluminationAssessment;//*/
+	delete objIlluminationAssessment;
 	
 	std::cout << "Quality measures of image are:" << std::endl;
 	for (int i = 0; i < 4; i++)
@@ -92,8 +95,6 @@ void SetImagesNamesAndQualityFocus(std::vector<std::vector<std::string>>* namesA
 	{
 		namesAndQuality->push_back({ "images/Focus/good/"+tempVector[i], "good" });
 	}
-
-
 	tempVector = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Focus/normal");
 	size_t sizeNormal = tempVector.size();
 	for (int i = 0; i < sizeNormal; i++)
