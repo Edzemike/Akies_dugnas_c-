@@ -4,11 +4,11 @@
 #include "IlluminationAssessment.h"
 #include "ContrastAssesment.h"
 
-void SetImagesNamesAndQuality(std::vector<std::vector<std::string>>*);
+void SetImagesNamesAndQualityFocus(std::vector<std::vector<std::string>>*);
 int main()
 {
 	std::vector<std::vector<std::string>> namesAndQuality;
-	SetImagesNamesAndQuality(&namesAndQuality);
+	SetImagesNamesAndQualityFocus(&namesAndQuality);
 
 	// This constructor sets classifier data automatically
 	ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndQuality);
@@ -84,27 +84,27 @@ int main()
 	return(0);
 }
 
-void SetImagesNamesAndQuality(std::vector<std::vector<std::string>>* namesAndQuality)
+void SetImagesNamesAndQualityFocus(std::vector<std::vector<std::string>>* namesAndQuality)
 {
-	std::vector<std::string> tempVector = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/good");
+	std::vector<std::string> tempVector = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Focus/good");
 	size_t sizeGood = tempVector.size();
 	for (int i = 0; i < sizeGood; i++)
 	{
-		namesAndQuality->push_back({ "images/good/"+tempVector[i], "good" });
+		namesAndQuality->push_back({ "images/Focus/good/"+tempVector[i], "good" });
 	}
 
 
-	tempVector = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/normal");
+	tempVector = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Focus/normal");
 	size_t sizeNormal = tempVector.size();
 	for (int i = 0; i < sizeNormal; i++)
 	{
-		namesAndQuality->push_back({ "images/normal/"+tempVector[i], "normal" });
+		namesAndQuality->push_back({ "images/Focus/normal/"+tempVector[i], "normal" });
 	}
 
-	tempVector = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/bad");
+	tempVector = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Focus/bad");
 	size_t sizeBad = tempVector.size();
 	for (int i = 0; i < sizeBad; i++)
 	{
-		namesAndQuality->push_back({ "images/bad/"+tempVector[i], "bad" });
+		namesAndQuality->push_back({ "images/Focus/bad/"+tempVector[i], "bad" });
 	}
 }
