@@ -33,6 +33,7 @@ int main()
 	std::cout << std::endl;*/
 
 	// This constructor sets classifier data automatically
+	std::cout << "start focus\n";
 	FocusAssessment* objFocusAssessment = new FocusAssessment(namesAndQuality);
 	std::vector<float> focusQuality = objFocusAssessment->GetFocusQuality("images/image_bad.jpg");
 	delete objFocusAssessment;
@@ -46,13 +47,16 @@ int main()
 	focusQuality[3] == o.good ? printf("good") : focusQuality[3] == o.normal ? printf("normal") : printf("bad");
 	std::cout << std::endl;
 	
+	std::cout << "start color\n";
+
 	ColourAssessment* objColourAssessment = new ColourAssessment(namesAndQuality);
-	std::vector<float> colourQuality = objColourAssessment->GetColourQuality("images/image_good.jpg");
+	std::vector<float> colourQuality = objColourAssessment->GetColourQuality("images/image_good.jpg", 0);
 	delete objColourAssessment;
 
+	std::cout << "start ill\n";
 	IlluminationAssessment* objIlluminationAssessment = new IlluminationAssessment(namesAndQuality);
 	std::vector<float> illuminationQuality = objIlluminationAssessment->GetIlluminationQuality("images/image_good.jpg");
-	delete objIlluminationAssessment;
+	delete objIlluminationAssessment;//*/
 	
 	std::cout << "Quality measures of image are:" << std::endl;
 	for (int i = 0; i < 4; i++)

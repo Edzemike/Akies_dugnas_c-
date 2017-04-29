@@ -19,9 +19,9 @@ public:
 	ColourAssessment(std::string);
 	ColourAssessment(std::vector<std::vector<std::string>>&);
 	~ColourAssessment();
-	std::vector<float> GetColourQuality(std::string);
-	std::vector<float> getColourMeasures(std::string&); // was private
-
+	std::vector<float> GetColourQuality(std::string, int alg);
+	std::vector<float> getColourMeasuresBGR(std::string&); // was private
+	std::vector<float> getColourMeasuresHSV(std::string&);
 private:
 	int imagePool;
 	int Bmax = 255, Omax = 170, Dmax = 85;

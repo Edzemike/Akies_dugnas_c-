@@ -27,5 +27,6 @@ private:
 	std::vector<std::vector<float>> gradesOfImages;
 
 	void setIlluminationClassifierData();
-	std::vector<float> getIlluminationMeasures(std::string&);
+	std::vector<float> getIlluminationMeasuresBGR(std::string&);
+	std::vector<float> getIlluminationMeasuresHSL(std::string&);
 };
