@@ -129,6 +129,10 @@ void ContrastAssesment::setDistancesFromOriginal(std::vector<std::vector<float>>
 }
 
 std::vector<float> ContrastAssesment::getContrastMeasures(std::string &path)
+/**
+* Ávykdo dokumentacijoje apraðytà kontrasto algoritmà ir
+* gràþina nuotraukos áverèius vektoriuje.
+*/
 {
 	cv::Mat imgOriginal;
 	cv::Mat imgColorMap;
@@ -195,6 +199,10 @@ std::vector<float> ContrastAssesment::getContrastMeasures(std::string &path)
 }
 
 void ContrastAssesment::getPixelCount(cv::Mat *imgSource, std::vector<int> &pixelCount)
+/**
+* Apskaièiuoja kiek yra pikseliø kiekviename ryðkume
+* nuo 0 iki 255 ir áraðo á vektoriø.
+*/
 {
 	// Go through whole matrix
 	for (int x = 0; x < imgSource->rows; x++)
@@ -208,6 +216,10 @@ void ContrastAssesment::getPixelCount(cv::Mat *imgSource, std::vector<int> &pixe
 }
 
 void ContrastAssesment::setPixelPercentageWithinBin(int* bin, int *totalPixels, std::vector<float> &pixelPercentage, std::vector<int> &pixelCount)
+/**
+* Apskaièiuoja koks visø pikseliø procentas yra kiekviename
+* diapozone bin.
+*/
 {
 	for (int i = 0; i < *bin; i++)
 	{
@@ -222,6 +234,10 @@ void ContrastAssesment::setPixelPercentageWithinBin(int* bin, int *totalPixels, 
 }
 
 void ContrastAssesment::applyColorMap()
+/**
+* Metodas, kuris uþdeda ant orginalaus paveikslëlio
+* gero kontrasto kaukæ.
+*/
 {
 	cv::Mat imgOriginal;
 	cv::Mat imgColorMap;
