@@ -2,7 +2,7 @@
 
 ContrastAssesment::ContrastAssesment()
 /**
-* Tuðèias konstruktorius
+* Tuðèias konstruktorius.
 */
 {
 }
@@ -17,6 +17,9 @@ ContrastAssesment::ContrastAssesment(std::vector<std::vector<std::string>> &data
 }
 
 ContrastAssesment::~ContrastAssesment()
+/**
+* Destruktorius.
+*/
 {
 }
 
