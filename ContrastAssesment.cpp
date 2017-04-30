@@ -2,14 +2,14 @@
 
 ContrastAssesment::ContrastAssesment()
 /**
-* Empty constructor
+* Tuðèias konstruktorius
 */
 {
 }
 
 ContrastAssesment::ContrastAssesment(std::vector<std::vector<std::string>> &data)
 /**
-* Constructor that sets classifier data automatically (always used)
+* Konstruktorius, kuris automatiðkai apsimokina (visada naudojamas).
 */
 {
 	namesAndContrastOfImages = data;
@@ -21,19 +21,24 @@ ContrastAssesment::~ContrastAssesment()
 }
 
 void ContrastAssesment::setContrastClassifierData()
+/**
+* Apsimokinimo metodas. Áraðo nuotraukos iverèius á vektoriø.
+*/
 {
 	imagePool = namesAndContrastOfImages.size();
 	for (int i = 0; i < imagePool; i++)
 	{
 		// Sets 4 quality numbers to vector
 		gradesOfImages.push_back(getContrastMeasures(namesAndContrastOfImages[i][o.path]));
-		std::cout << "read: " << namesAndContrastOfImages[i][0] << std::endl; // OUTPUT IS FOR DEBUGGING
-		//std::cout << "measures: " << gradesOfImages[i][0] << " " << gradesOfImages[i][1] << " " << gradesOfImages[i][2] << " " << gradesOfImages[i][3] << " " << std::endl; // OUTPUT IS FOR DEBUGGING
-		//std::cout << "diff: " << abs(gradesOfImages[i][0] - gradesOfImages[i][3]) << std::endl;
 	}
 }
 
 std::vector<float> ContrastAssesment::GetContrastQuality(std::string path)
+/**
+* Metodas, kuris apskaièiuoja duotos nuotraukos áverèius
+* priklausomai nuo apsimokinimo duomenø ir gràþina rezultatà
+* kartu su þodiniu áverèiu.
+*/
 {
 	std::vector<std::vector<float>> distances;
 
@@ -47,13 +52,16 @@ std::vector<float> ContrastAssesment::GetContrastQuality(std::string path)
 	std::sort(distances.begin(), distances.end(), [](const std::vector<float>& a, const std::vector<float>& b) { return a[0] < b[0]; });
 
 	// Searches in 5 nearest images and push_back to contrastMeasures the answer (quality of image)
-	mostMatchesInNearest(distances, contrastMeasures, 2);
+	mostMatchesInNearest(distances, contrastMeasures, 1);
 
 	return contrastMeasures;
 }
 
-// MAKE IT WORK
-void ContrastAssesment::mostMatchesInNearest(std::vector<std::vector<float>> &distances, std::vector<float> &focusMeasures, int nearestPool) // FIX ME
+void ContrastAssesment::mostMatchesInNearest(std::vector<std::vector<float>> &distances, std::vector<float> &focusMeasures, int nearestPool)
+/**
+* Metodas, kuris apskaièiuoja þodiná nuotraukos ávertá
+* pagal didþiausià kieká ið artimiausiø nearestPool.
+*/
 {
 	int count_low = 0;
 	int count_high = 0;
@@ -90,7 +98,13 @@ void ContrastAssesment::mostMatchesInNearest(std::vector<std::vector<float>> &di
 }
 
 void ContrastAssesment::setDistancesFromOriginal(std::vector<std::vector<float>> &distances, std::vector<float> &original)
+/**
+* Metodas paskaièiuoja apsimokinimo nuotraukø atstumus
+* nuo paduotos nuotraukos. Taip pat áraðo þodiná nuotraukos
+* ávertá.
+*/
 {
+	// FIXME: is this algorithm correct?
 	// Goes through all pictures
 	for (int i = 0; i < imagePool; i++)
 	{
