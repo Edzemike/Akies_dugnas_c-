@@ -2,17 +2,17 @@
 
 ContrastAssesment::ContrastAssesment()
 /**
-*Empty constructor
+* Empty constructor
 */
 {
 }
 
 ContrastAssesment::ContrastAssesment(std::vector<std::vector<std::string>> &data)
 /**
-*This constructor sets classifier data automatically
+* Constructor that sets classifier data automatically (always used)
 */
 {
-	namesAndQualityOfImages = data;
+	namesAndContrastOfImages = data;
 	setContrastClassifierData();
 }
 
@@ -22,12 +22,12 @@ ContrastAssesment::~ContrastAssesment()
 
 void ContrastAssesment::setContrastClassifierData()
 {
-	imagePool = namesAndQualityOfImages.size();
+	imagePool = namesAndContrastOfImages.size();
 	for (int i = 0; i < imagePool; i++)
 	{
 		// Sets 4 quality numbers to vector
-		gradesOfImages.push_back(getContrastMeasures(namesAndQualityOfImages[i][o.path]));
-		std::cout << "read: " << namesAndQualityOfImages[i][0] << std::endl; // OUTPUT IS FOR DEBUGGING
+		gradesOfImages.push_back(getContrastMeasures(namesAndContrastOfImages[i][o.path]));
+		std::cout << "read: " << namesAndContrastOfImages[i][0] << std::endl; // OUTPUT IS FOR DEBUGGING
 		//std::cout << "measures: " << gradesOfImages[i][0] << " " << gradesOfImages[i][1] << " " << gradesOfImages[i][2] << " " << gradesOfImages[i][3] << " " << std::endl; // OUTPUT IS FOR DEBUGGING
 		//std::cout << "diff: " << abs(gradesOfImages[i][0] - gradesOfImages[i][3]) << std::endl;
 	}
@@ -55,44 +55,34 @@ std::vector<float> ContrastAssesment::GetContrastQuality(std::string path)
 // MAKE IT WORK
 void ContrastAssesment::mostMatchesInNearest(std::vector<std::vector<float>> &distances, std::vector<float> &focusMeasures, int nearestPool) // FIX ME
 {
-	int count_good = 0;
-	int count_normal = 0;
-	int count_bad = 0;
+	int count_low = 0;
+	int count_high = 0;
 	// Most matches from image groups in nearest dots (nearestPool)
 	for (int i = 0; i < nearestPool; i++)
 	{
-		if (distances[i][o.quality] == o.good)
+		if (distances[i][o.contrast] == o.low)
 		{
-			count_good++;
+			count_low++;
 			continue;
 		}
-		if (distances[i][o.quality] == o.normal)
+		if (distances[i][o.contrast] == o.high)
 		{
-			count_normal++;
-			continue;
-		}
-		if (distances[i][o.quality] == o.bad)
-		{
-			count_bad++;
+			count_high++;
 		}
 	}
 
 	// CAN BE OPTIMIZED
-	if (count_good > count_bad && count_good > count_normal)
+	if (count_high > count_low)
 	{
-		focusMeasures.push_back(o.good);
+		focusMeasures.push_back(o.high);
 	}
-	else if (count_normal > count_good && count_normal > count_bad)
+	else if (count_low > count_high)
 	{
-		focusMeasures.push_back(o.normal);
-	}
-	else if (count_bad > count_good && count_bad > count_normal)
-	{
-		focusMeasures.push_back(o.bad);
+		focusMeasures.push_back(o.low);
 	}
 	else
 	{
-		std::cout << "error: two classifiers are at the same distance\n";
+		std::cout << "error: two classifiers are at the same distance (contrast)\n";
 		_getch();
 		exit(EXIT_FAILURE);
 	}
@@ -116,12 +106,10 @@ void ContrastAssesment::setDistancesFromOriginal(std::vector<std::vector<float>>
 			//std::fill(distances[i].begin(), distances[i].end(), 0);
 		//}
 
-		if (namesAndQualityOfImages[i][o.quality] == "good")
-			distances[i].push_back(o.good);
-		else if (namesAndQualityOfImages[i][o.quality] == "normal")
-			distances[i].push_back(o.normal);
-		else if (namesAndQualityOfImages[i][o.quality] == "bad")
-			distances[i].push_back(o.bad);
+		if (namesAndContrastOfImages[i][o.contrast] == "low")
+			distances[i].push_back(o.low);
+		else if (namesAndContrastOfImages[i][o.contrast] == "high")
+			distances[i].push_back(o.high);
 	}
 }
 

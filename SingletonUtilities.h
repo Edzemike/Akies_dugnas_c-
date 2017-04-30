@@ -15,6 +15,9 @@
 // Object to help with iterators (easier to read code)
 static struct o
 {
+	// Contrast
+	const int low = 0;
+	const int high = 1;
 	// Quality
 	const int good = 0;
 	const int normal = 1;
@@ -22,6 +25,7 @@ static struct o
 	// To the picture
 	const int path = 0;
 	// Of the picture
+	const int contrast = 1;
 	const int quality = 1;
 	// Focus measures
 	const int FM1 = 0;

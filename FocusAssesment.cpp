@@ -163,7 +163,7 @@ void FocusAssessment::mostMatchesInNearest(std::vector<std::vector<float>> &dist
 	}
 	else
 	{
-		std::cout << "error: two classifiers are at the same distance\n";
+		std::cout << "error: two classifiers are at the same distance (focus)\n";
 		_getch();
 		exit(EXIT_FAILURE);
 	}

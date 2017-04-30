@@ -12,7 +12,7 @@ public:
 
 private:
 	int imagePool;
-	std::vector<std::vector<std::string>> namesAndQualityOfImages;
+	std::vector<std::vector<std::string>> namesAndContrastOfImages;
 	std::vector<std::vector<float>> gradesOfImages;
 
 	void setContrastClassifierData();
