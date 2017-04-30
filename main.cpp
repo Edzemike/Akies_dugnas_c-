@@ -18,10 +18,13 @@ int main()
 	std::cout << std::endl;*/
 
 	// This constructor sets classifier data automatically
-	/*std::cout << "start contrast\n";
+	std::cout << "start contrast\n";
+	// IMPORTANT:
+	// ContrastAssesment must have at least 5 photos in data folder overall.
+	// Then change this line mostMatchesInNearest(distances, contrastMeasures, 1);
+	// In ContrastAssesment.cpp (1 to 5)
 	std::vector<std::vector<std::string>> namesAndContrast;
 	SetImagesNamesAndContrast(&namesAndContrast);
-	std::cout << "main: " << namesAndContrast.size() << std::endl;
 	ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndContrast);
 	std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality("images/low.jpg");
 	delete objContrastAssessment;
@@ -33,7 +36,7 @@ int main()
 	}
 	std::cout << "\nContrast quality of image is ";
 	contrastQuality[4] == o.high ? printf("high") : printf("low");
-	std::cout << std::endl;*/
+	std::cout << std::endl;
 
 	// This constructor sets classifier data automatically
 	std::cout << "start focus\n";
@@ -65,12 +68,12 @@ int main()
 	std::vector<float> illuminationQuality = objIlluminationAssessment->GetIlluminationQuality("images/image_good.jpg");
 	delete objIlluminationAssessment;
 	
-	/*std::cout << "Quality measures of image are:" << std::endl;
+	std::cout << "Quality measures of image are:" << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
 		std::cout << " " << contrastQuality[i];
 	}
-	std::cout << std::endl;*/
+	std::cout << std::endl;
 	for (int i = 0; i < 3; i++)
 	{
 		std::cout << " " << focusQuality[i];

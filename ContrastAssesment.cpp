@@ -47,7 +47,7 @@ std::vector<float> ContrastAssesment::GetContrastQuality(std::string path)
 	std::sort(distances.begin(), distances.end(), [](const std::vector<float>& a, const std::vector<float>& b) { return a[0] < b[0]; });
 
 	// Searches in 5 nearest images and push_back to contrastMeasures the answer (quality of image)
-	mostMatchesInNearest(distances, contrastMeasures, 5);
+	mostMatchesInNearest(distances, contrastMeasures, 2);
 
 	return contrastMeasures;
 }
@@ -58,6 +58,7 @@ void ContrastAssesment::mostMatchesInNearest(std::vector<std::vector<float>> &di
 	int count_low = 0;
 	int count_high = 0;
 	// Most matches from image groups in nearest dots (nearestPool)
+	std::cout << distances[0][o.contrast] << std::endl;
 	for (int i = 0; i < nearestPool; i++)
 	{
 		if (distances[i][o.contrast] == o.low)
