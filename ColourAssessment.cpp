@@ -1,10 +1,13 @@
-#include "ColourAssessment.h"
+﻿#include "ColourAssessment.h"
 
 ColourAssessment::ColourAssessment(std::string imagePath)
 {
 }
 
 ColourAssessment::ColourAssessment(std::vector<std::string> &data)
+/**
+* ąčęėįšųū 
+*/
 {
 	namesOfImages = data;
 	std::cout << namesOfImages[0] << namesOfImages[1] << namesOfImages[2] << std::endl; // OK
