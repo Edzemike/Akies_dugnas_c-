@@ -2,38 +2,46 @@
 
 ContrastAssesment::ContrastAssesment()
 /**
-*Empty constructor
+* Tuðèias konstruktorius.
 */
 {
 }
 
 ContrastAssesment::ContrastAssesment(std::vector<std::vector<std::string>> &data)
 /**
-*This constructor sets classifier data automatically
+* Konstruktorius, kuris automatiðkai apsimokina (visada naudojamas).
 */
 {
-	namesAndQualityOfImages = data;
+	namesAndContrastOfImages = data;
 	setContrastClassifierData();
 }
 
 ContrastAssesment::~ContrastAssesment()
+/**
+* Destruktorius.
+*/
 {
 }
 
 void ContrastAssesment::setContrastClassifierData()
+/**
+* Apsimokinimo metodas. Áraðo nuotraukos iverèius á vektoriø.
+*/
 {
-	imagePool = namesAndQualityOfImages.size();
+	imagePool = namesAndContrastOfImages.size();
 	for (int i = 0; i < imagePool; i++)
 	{
 		// Sets 4 quality numbers to vector
-		gradesOfImages.push_back(getContrastMeasures(namesAndQualityOfImages[i][o.path]));
-		std::cout << "read: " << namesAndQualityOfImages[i][0] << std::endl; // OUTPUT IS FOR DEBUGGING
-		//std::cout << "measures: " << gradesOfImages[i][0] << " " << gradesOfImages[i][1] << " " << gradesOfImages[i][2] << " " << gradesOfImages[i][3] << " " << std::endl; // OUTPUT IS FOR DEBUGGING
-		//std::cout << "diff: " << abs(gradesOfImages[i][0] - gradesOfImages[i][3]) << std::endl;
+		gradesOfImages.push_back(getContrastMeasures(namesAndContrastOfImages[i][o.path]));
 	}
 }
 
 std::vector<float> ContrastAssesment::GetContrastQuality(std::string path)
+/**
+* Metodas, kuris apskaièiuoja duotos nuotraukos áverèius
+* priklausomai nuo apsimokinimo duomenø ir gràþina rezultatà
+* kartu su þodiniu áverèiu.
+*/
 {
 	std::vector<std::vector<float>> distances;
 
@@ -47,59 +55,59 @@ std::vector<float> ContrastAssesment::GetContrastQuality(std::string path)
 	std::sort(distances.begin(), distances.end(), [](const std::vector<float>& a, const std::vector<float>& b) { return a[0] < b[0]; });
 
 	// Searches in 5 nearest images and push_back to contrastMeasures the answer (quality of image)
-	mostMatchesInNearest(distances, contrastMeasures, 5);
+	mostMatchesInNearest(distances, contrastMeasures, 1);
 
 	return contrastMeasures;
 }
 
-// MAKE IT WORK
-void ContrastAssesment::mostMatchesInNearest(std::vector<std::vector<float>> &distances, std::vector<float> &focusMeasures, int nearestPool) // FIX ME
+void ContrastAssesment::mostMatchesInNearest(std::vector<std::vector<float>> &distances, std::vector<float> &focusMeasures, int nearestPool)
+/**
+* Metodas, kuris apskaièiuoja þodiná nuotraukos ávertá
+* pagal didþiausià kieká ið artimiausiø nearestPool.
+*/
 {
-	int count_good = 0;
-	int count_normal = 0;
-	int count_bad = 0;
+	int count_low = 0;
+	int count_high = 0;
 	// Most matches from image groups in nearest dots (nearestPool)
+	std::cout << distances[0][o.contrast] << std::endl;
 	for (int i = 0; i < nearestPool; i++)
 	{
-		if (distances[i][o.quality] == o.good)
+		if (distances[i][o.contrast] == o.low)
 		{
-			count_good++;
+			count_low++;
 			continue;
 		}
-		if (distances[i][o.quality] == o.normal)
+		if (distances[i][o.contrast] == o.high)
 		{
-			count_normal++;
-			continue;
-		}
-		if (distances[i][o.quality] == o.bad)
-		{
-			count_bad++;
+			count_high++;
 		}
 	}
 
 	// CAN BE OPTIMIZED
-	if (count_good > count_bad && count_good > count_normal)
+	if (count_high > count_low)
 	{
-		focusMeasures.push_back(o.good);
+		focusMeasures.push_back(o.high);
 	}
-	else if (count_normal > count_good && count_normal > count_bad)
+	else if (count_low > count_high)
 	{
-		focusMeasures.push_back(o.normal);
-	}
-	else if (count_bad > count_good && count_bad > count_normal)
-	{
-		focusMeasures.push_back(o.bad);
+		focusMeasures.push_back(o.low);
 	}
 	else
 	{
-		std::cout << "error: two classifiers are at the same distance\n";
+		std::cout << "error: two classifiers are at the same distance (contrast)\n";
 		_getch();
 		exit(EXIT_FAILURE);
 	}
 }
 
 void ContrastAssesment::setDistancesFromOriginal(std::vector<std::vector<float>> &distances, std::vector<float> &original)
+/**
+* Metodas paskaièiuoja apsimokinimo nuotraukø atstumus
+* nuo paduotos nuotraukos. Taip pat áraðo þodiná nuotraukos
+* ávertá.
+*/
 {
+	// FIXME: is this algorithm correct?
 	// Goes through all pictures
 	for (int i = 0; i < imagePool; i++)
 	{
@@ -116,16 +124,18 @@ void ContrastAssesment::setDistancesFromOriginal(std::vector<std::vector<float>>
 			//std::fill(distances[i].begin(), distances[i].end(), 0);
 		//}
 
-		if (namesAndQualityOfImages[i][o.quality] == "good")
-			distances[i].push_back(o.good);
-		else if (namesAndQualityOfImages[i][o.quality] == "normal")
-			distances[i].push_back(o.normal);
-		else if (namesAndQualityOfImages[i][o.quality] == "bad")
-			distances[i].push_back(o.bad);
+		if (namesAndContrastOfImages[i][o.contrast] == "low")
+			distances[i].push_back(o.low);
+		else if (namesAndContrastOfImages[i][o.contrast] == "high")
+			distances[i].push_back(o.high);
 	}
 }
 
 std::vector<float> ContrastAssesment::getContrastMeasures(std::string &path)
+/**
+* Ávykdo dokumentacijoje apraðytà kontrasto algoritmà ir
+* gràþina nuotraukos áverèius vektoriuje.
+*/
 {
 	cv::Mat imgOriginal;
 	cv::Mat imgColorMap;
@@ -192,6 +202,10 @@ std::vector<float> ContrastAssesment::getContrastMeasures(std::string &path)
 }
 
 void ContrastAssesment::getPixelCount(cv::Mat *imgSource, std::vector<int> &pixelCount)
+/**
+* Apskaièiuoja kiek yra pikseliø kiekviename ryðkume
+* nuo 0 iki 255 ir áraðo á vektoriø.
+*/
 {
 	// Go through whole matrix
 	for (int x = 0; x < imgSource->rows; x++)
@@ -205,6 +219,10 @@ void ContrastAssesment::getPixelCount(cv::Mat *imgSource, std::vector<int> &pixe
 }
 
 void ContrastAssesment::setPixelPercentageWithinBin(int* bin, int *totalPixels, std::vector<float> &pixelPercentage, std::vector<int> &pixelCount)
+/**
+* Apskaièiuoja koks visø pikseliø procentas yra kiekviename
+* diapozone bin.
+*/
 {
 	for (int i = 0; i < *bin; i++)
 	{
@@ -219,6 +237,10 @@ void ContrastAssesment::setPixelPercentageWithinBin(int* bin, int *totalPixels, 
 }
 
 void ContrastAssesment::applyColorMap()
+/**
+* Metodas, kuris uþdeda ant orginalaus paveikslëlio
+* gero kontrasto kaukæ.
+*/
 {
 	cv::Mat imgOriginal;
 	cv::Mat imgColorMap;

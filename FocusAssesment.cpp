@@ -1,34 +1,32 @@
 #include "FocusAssessment.h"
 
 FocusAssessment::FocusAssessment(std::string imagePath)
+/**
+* Tuðèias konstruktorius
+*/
 {
 }
 
 FocusAssessment::FocusAssessment(std::vector<std::vector<std::string>> &data)
+/**
+* Konstruktorius, kuris automatiðkai apsimokina (visada naudojamas).
+*/
 {
 	namesAndQualityOfImages = data;
 	setFocusClassifierData();
 }
 
 FocusAssessment::~FocusAssessment()
+/**
+* Destruktorius.
+*/
 {
 }
 
-/*cv::Mat FocusAssessment::readImage(std::string path)
-{
-	cv::Mat imgOriginal;
-	imgOriginal = cv::imread(path);
-
-	if (imgOriginal.empty()) {
-		std::cout << "error: image not read from file\n";
-		_getch();
-		exit(EXIT_FAILURE);
-	}
-
-	return imgOriginal;
-}*/
-
 cv::Mat FocusAssessment::convertToGrayscale(cv::Mat *imgOriginal)
+/**
+* Paverèia BGR tipo paveikslëlá á pilkà ir já gràþina.
+*/
 {
 	cv::Mat imgGrayscale;
 	//				from		   to
@@ -37,14 +35,20 @@ cv::Mat FocusAssessment::convertToGrayscale(cv::Mat *imgOriginal)
 }
 
 double FocusAssessment::getGradientMean(cv::Mat *imgGradient)
+/**
+* Apskaièiuoja matricos vidurká ir já gràþina.
+*/
 {
 	cv::Scalar meanValue = cv::mean(*imgGradient);
 	return meanValue[0];
 }
 
 cv::Mat FocusAssessment::applySobelOperator(cv::Mat *imgGrayscale) // Sobel operation makes gradient map (O)
+/**
+* Pritaiko Sobelio filtrà ir gràþina matricà.
+*/
 {
-	cv::Mat imgGradient;
+	cv::Mat imgSobel;
 	int scale = 1;
 	int delta = 0;
 	int ddepth = CV_16S;
@@ -62,12 +66,16 @@ cv::Mat FocusAssessment::applySobelOperator(cv::Mat *imgGrayscale) // Sobel oper
 	convertScaleAbs(grad_y, abs_grad_y);
 
 	/// Total Gradient (approximate)
-	addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0, imgGradient);
+	addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0, imgSobel);
 
-	return imgGradient;
+	return imgSobel;
 }
 
 std::vector<float> FocusAssessment::getFocusMeasures(std::string &path)
+/**
+* Ávykdo dokumentacijoje apraðytà fokuso algoritmà ir
+* gràþina nuotraukos áverèius vektoriuje.
+*/
 {
 	cv::Mat imgOriginal;
 	cv::Mat imgGrayscale;
@@ -115,6 +123,9 @@ std::vector<float> FocusAssessment::getFocusMeasures(std::string &path)
 }
 
 void FocusAssessment::setFocusClassifierData()
+/**
+* Apsimokinimo metodas. Áraðo nuotraukos iverèius á vektoriø.
+*/
 {
 	imagePool = namesAndQualityOfImages.size();
 	for (int i = 0; i < imagePool; i++)
@@ -125,7 +136,11 @@ void FocusAssessment::setFocusClassifierData()
 	}
 }
 
-void FocusAssessment::mostMatchesInNearest(std::vector<std::vector<float>> &distances, std::vector<float> &focusMeasures, int nearestPool) // FIX ME
+void FocusAssessment::mostMatchesInNearest(std::vector<std::vector<float>> &distances, std::vector<float> &focusMeasures, int nearestPool)
+/**
+* Metodas, kuris apskaièiuoja þodiná nuotraukos ávertá
+* pagal didþiausià kieká ið artimiausiø nearestPool.
+*/
 {
 	int count_good = 0;
 	int count_normal = 0;
@@ -163,13 +178,18 @@ void FocusAssessment::mostMatchesInNearest(std::vector<std::vector<float>> &dist
 	}
 	else
 	{
-		std::cout << "error: two classifiers are at the same distance\n";
+		std::cout << "error: two classifiers are at the same distance (focus)\n";
 		_getch();
 		exit(EXIT_FAILURE);
 	}
 }
 
-void FocusAssessment::setDistancesFromOriginal(std::vector<std::vector<float>> &distances, std::vector<float> &original) // Rodykles i kintamuosius // FIX ME
+void FocusAssessment::setDistancesFromOriginal(std::vector<std::vector<float>> &distances, std::vector<float> &original) // Rodykles i kintamuosius
+/**
+* Metodas paskaièiuoja apsimokinimo nuotraukø atstumus
+* nuo paduotos nuotraukos. Taip pat áraðo þodiná nuotraukos
+* ávertá.
+*/
 {
 	// Goes through all pictures
 	for (int i = 0; i < imagePool; i++)
@@ -189,7 +209,12 @@ void FocusAssessment::setDistancesFromOriginal(std::vector<std::vector<float>> &
 	}
 }
 
-std::vector<float> FocusAssessment::GetFocusQuality(std::string path) // FIX ME
+std::vector<float> FocusAssessment::GetFocusQuality(std::string path)
+/**
+* Metodas, kuris apskaièiuoja duotos nuotraukos áverèius
+* priklausomai nuo apsimokinimo duomenø ir gràþina rezultatà
+* kartu su þodiniu áverèiu.
+*/
 {
 	std::vector<std::vector<float>> distances;
 

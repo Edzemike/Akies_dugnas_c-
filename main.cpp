@@ -5,26 +5,10 @@
 #include "ContrastAssesment.h"
 
 void SetImagesNamesAndQualityFocus(std::vector<std::vector<std::string>>*);
+void SetImagesNamesAndContrast(std::vector<std::vector<std::string>>*);
 
 int main()
 {
-	std::vector<std::vector<std::string>> namesAndQuality;
-	SetImagesNamesAndQualityFocus(&namesAndQuality);
-
-	// This constructor sets classifier data automatically
-	ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndQuality);
-	std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality("images/image_good.jpg");
-	delete objContrastAssessment;
-
-	std::cout << "Contrast measures of image are:";
-	for (int i = 0; i < 4; i++)
-	{
-		std::cout << " " << contrastQuality[i];
-	}
-	std::cout << "\nContrast quality of image is ";
-	contrastQuality[4] == o.good ? printf("good") : contrastQuality[4] == o.normal ? printf("normal") : printf("bad");
-	std::cout << std::endl;
-
 	// FOR DEBUGGING
 	/*std::cout << "Images paths are:\n";
 	for (int i = 0; i < namesAndQuality.size(); i++)
@@ -34,7 +18,30 @@ int main()
 	std::cout << std::endl;*/
 
 	// This constructor sets classifier data automatically
+	std::cout << "start contrast\n";
+	// IMPORTANT:
+	// ContrastAssesment must have at least 5 photos in data folder overall.
+	// Then change this line mostMatchesInNearest(distances, contrastMeasures, 1);
+	// In ContrastAssesment.cpp (1 to 5)
+	std::vector<std::vector<std::string>> namesAndContrast;
+	SetImagesNamesAndContrast(&namesAndContrast);
+	ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndContrast);
+	std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality("images/low.jpg");
+	delete objContrastAssessment;
+
+	std::cout << "Contrast measures of image are:";
+	for (int i = 0; i < 4; i++)
+	{
+		std::cout << " " << contrastQuality[i];
+	}
+	std::cout << "\nContrast quality of image is ";
+	contrastQuality[4] == o.high ? printf("high") : printf("low");
+	std::cout << std::endl;
+
+	// This constructor sets classifier data automatically
 	std::cout << "start focus\n";
+	std::vector<std::vector<std::string>> namesAndQuality;
+	SetImagesNamesAndQualityFocus(&namesAndQuality);
 	FocusAssessment* objFocusAssessment = new FocusAssessment(namesAndQuality);
 	std::vector<float> focusQuality = objFocusAssessment->GetFocusQuality("images/image_bad.jpg");
 	delete objFocusAssessment;
@@ -108,5 +115,21 @@ void SetImagesNamesAndQualityFocus(std::vector<std::vector<std::string>>* namesA
 	for (int i = 0; i < sizeBad; i++)
 	{
 		namesAndQuality->push_back({ "images/Focus/bad/"+tempVector[i], "bad" });
+	}
+}
+
+void SetImagesNamesAndContrast(std::vector<std::vector<std::string>>* namesAndContrast)
+{
+	std::vector<std::string> tempVector = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Contrast/low");
+	size_t sizeGood = tempVector.size();
+	for (int i = 0; i < sizeGood; i++)
+	{
+		namesAndContrast->push_back({ "images/Contrast/low/" + tempVector[i], "low" });
+	}
+	tempVector = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Contrast/high");
+	size_t sizeNormal = tempVector.size();
+	for (int i = 0; i < sizeNormal; i++)
+	{
+		namesAndContrast->push_back({ "images/Contrast/high/" + tempVector[i], "high" });
 	}
 }
