@@ -1,34 +1,51 @@
-#include "IlluminationAssessment.h"
+﻿#include "IlluminationAssessment.h"
 
 IlluminationAssessment::IlluminationAssessment(std::string imagePath)
+/**
+* Tuščias konstruktorius objekto sukūrimui.
+*/
 {
 }
 IlluminationAssessment::IlluminationAssessment(std::vector<std::string> &data)
+/**
+* Konstruktorius, iškviečiantis "Illumination Assessment" (apšvietimo vertinimo) apmokymą.
+*/
 {
 	namesOfImages = data;
 	setIlluminationClassifierData();
 }
 
 IlluminationAssessment::~IlluminationAssessment()
+/**
+*Destruktorius objekto sunaikinimui.
+*/
 {
 }
 
 void IlluminationAssessment::setIlluminationClassifierData()
+/**
+* Programos apmokymas apdorojant mokomasias nuotraukas.
+* Iškviečiamas metodas, nustatantis spalvos įvertinimo matus, rezultatai išsugomi faile.
+*/
 {
 	imagePool = namesOfImages.size();
 	std::ofstream out;
 	out.open("./qualityParameters/parametersIllumination.txt");
 	for (int i = 0; i < imagePool; i++)
 	{
-		// Sets 3 quality numbers to vector
 		gradesOfImages.push_back(getIlluminationMeasuresBGR("./images/Illumination/" + namesOfImages[i]));
-		std::cout << "read: " << namesOfImages[i] << std::endl; // OUTPUT IS FOR DEBUGGING
 		out << gradesOfImages[i][0] << " " << gradesOfImages[i][1] << " " << gradesOfImages[i][2] << " " << gradesOfImages[i][3] << " " << namesOfImages[i] << std::endl;
 
 	}
 }
 
-std::vector<float> IlluminationAssessment::getIlluminationMeasuresBGR(std::string &path)
+std::vector<float> IlluminationAssessment::getIlluminationMeasuresBGR(std::string path)
+/**
+* Metodas apskaičiuojantis apšvietimo vertinimo matus.
+* Naudojama BGR spalvų skalė. Pikselio apšvietimas apskaičiuojamas pagal rastą formulę internete:
+* apšvietimas = (max(BGR) + min(BGR)) / 2
+* apskaičiuojamas vidutinis nuotraukos apšvietimas ir 3 skirtingi nuokrypiai nuo vidurkio
+*/
 {
 	cv::Mat imgOriginal;
 	cv::Mat imgBlurred;
@@ -81,29 +98,14 @@ std::vector<float> IlluminationAssessment::getIlluminationMeasuresBGR(std::strin
 	illuminationMeasures.push_back(IM3);
 	illuminationMeasures.push_back(IM4);
 
-	// In case you need to save an image
-	//srand(time(0)); // Seed random name generator
-	//SingletonUtilities::Instance()->SaveImage("images/", &imgCropped);
-
-	SingletonUtilities::Instance()->DisplayImage("imgOriginal", &imgOriginal); // THIS IS FOR DEBUGGING
-																			   // Output
-																			   /*std::printf("CM1: %f\nCM2: %f\nCM3: %f\n", CM1, CM2, CM3);
-																			   SingletonUtilities::Instance()->DisplayImage("imgCropped", &imgCropped);
-																			   SingletonUtilities::Instance()->DisplayImage("imgOriginal", &imgOriginal);
-																			   SingletonUtilities::Instance()->DisplayImage("imgGradient", &imgGradient);
-																			   SingletonUtilities::Instance()->DisplayImage("imgBlurred", &imgBlurred);*/
-	return illuminationMeasures;
-}
-
-
-std::vector<float> IlluminationAssessment::GetIlluminationQuality(std::string path) // FIX ME
-{
-	std::vector<float> illuminationMeasures = getIlluminationMeasuresBGR(path);
-
 	return illuminationMeasures;
 }
 
 std::string IlluminationAssessment::getIlluminationQuality(std::vector<float> mesurements)
+/**
+* Įvertinama nuotraukos kokybė pagal apsimokymo metu gautus rezultatus.
+* Skaičiuojamas atstumas tarp nuotraukų vertinimo keturmatėje erdvėje.
+*/
 {
 	std::string quality = "please show some exaples of even and uneven illumination";
 	std::ifstream parameters;
@@ -119,7 +121,6 @@ std::string IlluminationAssessment::getIlluminationQuality(std::vector<float> me
 		parameters >> d;
 		parameters >> s;
 		l2 = sqrt(pow((a - mesurements[0]), 2) + pow((b - mesurements[1]), 2) + pow((c - mesurements[2]), 2) + pow((d - mesurements[3]), 2));
-		std::cout << "l2: " << a << std::endl;
 		if (l2 < l1) {
 			l1 = l2;
 			quality = s;

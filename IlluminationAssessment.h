@@ -23,12 +23,13 @@ public:
 	~IlluminationAssessment();
 	std::vector<float> GetIlluminationQuality(std::string);
 	std::string getIlluminationQuality(std::vector<float> mesurements);
+	std::vector<float> getIlluminationMeasuresBGR(std::string);
 private:
 	int imagePool;
 	std::vector<std::string> namesOfImages;
 	std::vector<std::vector<float>> gradesOfImages;
 
 	void setIlluminationClassifierData();
-	std::vector<float> getIlluminationMeasuresBGR(std::string&);
+	
 	std::vector<float> getIlluminationMeasuresHSL(std::string&);
 };

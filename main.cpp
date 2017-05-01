@@ -9,6 +9,7 @@ void SetImagesNamesAndContrast(std::vector<std::vector<std::string>>*);
 
 int main()
 {
+	std::string imagePath = "images/image3.jpg";
 	// FOR DEBUGGING
 	/*std::cout << "Images paths are:\n";
 	for (int i = 0; i < namesAndQuality.size(); i++)
@@ -26,58 +27,45 @@ int main()
 	std::vector<std::vector<std::string>> namesAndContrast;
 	SetImagesNamesAndContrast(&namesAndContrast);
 	ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndContrast);
-	std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality("images/low.jpg");
+	std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality(imagePath);
 	delete objContrastAssessment;
 
-	std::cout << "Contrast measures of image are:";
-	for (int i = 0; i < 4; i++)
-	{
-		std::cout << " " << contrastQuality[i];
-	}
 	std::cout << "\nContrast quality of image is ";
 	contrastQuality[4] == o.high ? printf("high") : printf("low");
-	std::cout << std::endl;
+	std::cout << std::endl;//*/
 
 	// This constructor sets classifier data automatically
-	std::cout << "start focus\n";
 	std::vector<std::vector<std::string>> namesAndQuality;
 	SetImagesNamesAndQualityFocus(&namesAndQuality);
 	FocusAssessment* objFocusAssessment = new FocusAssessment(namesAndQuality);
-	std::vector<float> focusQuality = objFocusAssessment->GetFocusQuality("images/image_bad.jpg");
+	std::vector<float> focusQuality = objFocusAssessment->GetFocusQuality(imagePath);
 	delete objFocusAssessment;
 	
-	std::cout << "Focus measures of image are:";
-	for (int i = 0; i < 3; i++)
-	{
-		std::cout << " " << focusQuality[i];
-	}
-	std::cout << "\nFocus quality of image is ";
+	std::cout << "Focus quality of image is ";
 	focusQuality[3] == o.good ? printf("good") : focusQuality[3] == o.normal ? printf("normal") : printf("bad");
 	std::cout << std::endl;
 	
-	std::cout << "start color\n";
 	std::vector<std::string> imageNamesColour = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Colour");
 	ColourAssessment* objColourAssessment = new ColourAssessment(imageNamesColour);
-	std::vector<float> colourQuality = objColourAssessment->GetColourQuality("images/image3.jpg", 0);
-	std::cout << "quality of color mostly resembles: " << objColourAssessment->getColourQuality(colourQuality);
+	std::vector<float> colourQuality = objColourAssessment->getColourMeasuresHSV(imagePath);
+	std::cout << "Color quality mostly resembles: " << objColourAssessment->getColourQuality(colourQuality);
 	delete objColourAssessment;
 
-	std::cout << "\nstart ill\n";
 	std::vector<std::string> imageNamesIllumination = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Illumination");
 	IlluminationAssessment* objIlluminationAssessment = new IlluminationAssessment(imageNamesIllumination);
-	std::vector<float> illuminationQuality = objIlluminationAssessment->GetIlluminationQuality("images/low.jpg");
-	std::cout << "quality of illumination mostly resembles: " << objIlluminationAssessment->getIlluminationQuality(illuminationQuality);
+	std::vector<float> illuminationQuality = objIlluminationAssessment->getIlluminationMeasuresBGR(imagePath);
+	std::cout << "\nIllumination quality mostly resembles: " << objIlluminationAssessment->getIlluminationQuality(illuminationQuality);
 	delete objIlluminationAssessment;
 	
 	std::cout << "\nQuality measures of image are:" << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
-//		std::cout << " " << contrastQuality[i];
+		std::cout << " " << contrastQuality[i];
 	}
 	std::cout << std::endl;
 	for (int i = 0; i < 3; i++)
 	{
-//		std::cout << " " << focusQuality[i];
+		std::cout << " " << focusQuality[i];
 	}
 	std::cout << std::endl;
 	for (int i = 0; i < 3; i++)
