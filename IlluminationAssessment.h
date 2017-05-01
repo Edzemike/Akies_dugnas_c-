@@ -5,6 +5,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
+#include <fstream>
+#include <limits>
 #include <iostream>
 #include <conio.h>
 #include <time.h>
@@ -20,7 +22,7 @@ public:
 	IlluminationAssessment(std::vector<std::string>&);
 	~IlluminationAssessment();
 	std::vector<float> GetIlluminationQuality(std::string);
-
+	std::string getIlluminationQuality(std::vector<float> mesurements);
 private:
 	int imagePool;
 	std::vector<std::string> namesOfImages;

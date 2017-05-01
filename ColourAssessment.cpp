@@ -18,7 +18,7 @@ ColourAssessment::~ColourAssessment()
 void ColourAssessment::setColourClassifierData(std::vector<std::string> namesOfImages)
 {
 	std::ofstream output;
-	output.open("./images/Colour/parameters.txt");
+	output.open("./qualityParameters/parametersColour.txt");
 	imagePool = namesOfImages.size();
 	for (int i = 0; i < imagePool; i++)
 	{
@@ -81,13 +81,17 @@ std::vector<float> ColourAssessment::getColourMeasuresHSV(std::string &path)
 {
 
 	cv::Mat imgOriginal;
+	cv::Mat imgCropped;
+	cv::Mat imgHSV;
 	std::vector<float> ColourMeasures;
 	float CM1, CM2, CM3;
-	imgOriginal = SingletonUtilities::Instance()->ReadImage(path);
 	int B = 0, D = 0, O = 0; // brigth dark normal
-	int totalPixels = imgOriginal.total();
-	cv::Mat imgHSV;
-	cv::cvtColor(imgOriginal, imgHSV, cv::COLOR_BGR2HSV);
+	imgOriginal = SingletonUtilities::Instance()->ReadImage(path);
+	imgCropped = SingletonUtilities::Instance()->CropToROI(&imgOriginal);
+	
+	int totalPixels = imgCropped.total();
+	
+	cv::cvtColor(imgCropped, imgHSV, cv::COLOR_BGR2HSV);
 
 	for (int x = 0; x < imgHSV.cols; x++) {
 		for (int y = 0; y < imgHSV.rows; y++) {
@@ -152,10 +156,10 @@ std::string ColourAssessment::getColourQuality(std::vector<float> mesurements)
 {
 	std::string quality = "please show some exaples of bright dark and normal";
 	std::ifstream parameters;
-	float a, b, c, l1 = 1, l2 = 1, l3 = 1;
+	float a, b, c, l1 = 1, l2 = 1;
 	std::string s;
-	parameters.open("./images/Colour/parameters.txt");
-	while (true)
+	parameters.open("./qualityParameters/parametersColour.txt");
+	while (!parameters.eof())
 	{
 		parameters >> a;
 		parameters >> b;
@@ -163,11 +167,12 @@ std::string ColourAssessment::getColourQuality(std::vector<float> mesurements)
 		parameters >> s;
 		l2 = sqrt(pow((a - mesurements[0]), 2) + pow((b - mesurements[1]), 2) + pow((c - mesurements[2]), 2));
 		std::cout << "l2: " << a << std::endl;
-		if (l2 < l1) {
+		if (l2 <= l1) {
 			l1 = l2;
 			quality = s;
 		}
-		if (parameters.eof()) break;
 	}
+
+	parameters.close();
 	return quality;
 }
