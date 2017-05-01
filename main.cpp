@@ -58,18 +58,19 @@ int main()
 	std::cout << "\nstart ill\n";
 	std::vector<std::string> imageNamesIllumination = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Illumination");
 	IlluminationAssessment* objIlluminationAssessment = new IlluminationAssessment(imageNamesIllumination);
-	std::vector<float> illuminationQuality = objIlluminationAssessment->GetIlluminationQuality("images/image_good.jpg");
+	std::vector<float> illuminationQuality = objIlluminationAssessment->GetIlluminationQuality("images/low.jpg");
+	std::cout << "quality of illumination mostly resembles: " << objIlluminationAssessment->getIlluminationQuality(illuminationQuality);
 	delete objIlluminationAssessment;
 	
-	std::cout << "Quality measures of image are:" << std::endl;
+	std::cout << "\nQuality measures of image are:" << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
-		std::cout << " " << contrastQuality[i];
+//		std::cout << " " << contrastQuality[i];
 	}
 	std::cout << std::endl;
 	for (int i = 0; i < 3; i++)
 	{
-		std::cout << " " << focusQuality[i];
+//		std::cout << " " << focusQuality[i];
 	}
 	std::cout << std::endl;
 	for (int i = 0; i < 3; i++)
