@@ -19,7 +19,7 @@ public:
 	ColourAssessment(std::string);
 	ColourAssessment(std::vector<std::string>&);
 	~ColourAssessment();
-	std::vector<float> GetColourQuality(std::string, int alg);
+	//std::vector<float> GetColourQuality(std::string, int alg);
 	std::vector<float> getColourMeasuresBGR(std::string); // was private
 	std::vector<float> getColourMeasuresHSV(std::string);
 	std::string getColourQuality(std::vector<float> mesurements);

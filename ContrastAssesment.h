@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 
 #include "SingletonUtilities.h"
 
@@ -16,6 +17,7 @@ private:
 	std::vector<std::vector<float>> gradesOfImages;
 
 	void setContrastClassifierData();
+	void getContrastClassifierData();
 	void applyColorMap();
 	void setPixelPercentageWithinBin(int*, int*, std::vector<float>&, std::vector<int>&);
 	void getPixelCount(cv::Mat*, std::vector<int>&);

@@ -5,7 +5,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-
+#include <fstream>
 #include <iostream>
 #include <conio.h>
 #include <time.h>
@@ -29,6 +29,7 @@ private:
 	std::vector<std::vector<float>> gradesOfImages;
 
 	void setFocusClassifierData();
+	void getFocusClassifierData();
 	void mostMatchesInNearest(std::vector<std::vector<float>>&, std::vector<float>&, int);
 	void setDistancesFromOriginal(std::vector<std::vector<float>>&, std::vector<float>&);
 	std::vector<float> getFocusMeasures(std::string&);

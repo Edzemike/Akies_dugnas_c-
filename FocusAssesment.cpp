@@ -1,19 +1,20 @@
-#include "FocusAssessment.h"
+ï»¿#include "FocusAssessment.h"
 
 FocusAssessment::FocusAssessment(std::string imagePath)
 /**
-* Tuğèias konstruktorius
+* TuÃ°Ã¨ias konstruktorius
 */
 {
 }
 
 FocusAssessment::FocusAssessment(std::vector<std::vector<std::string>> &data)
 /**
-* Konstruktorius, kuris automatiğkai apsimokina (visada naudojamas).
+* Konstruktorius, kuris automatiÃ°kai apsimokina (visada naudojamas).
 */
 {
 	namesAndQualityOfImages = data;
 	setFocusClassifierData();
+	getFocusClassifierData();
 }
 
 FocusAssessment::~FocusAssessment()
@@ -25,7 +26,7 @@ FocusAssessment::~FocusAssessment()
 
 cv::Mat FocusAssessment::convertToGrayscale(cv::Mat *imgOriginal)
 /**
-* Paverèia BGR tipo paveikslëlá á pilkà ir já gràşina.
+* PaverÃ¨ia BGR tipo paveikslÃ«lÃ¡ Ã¡ pilkÃ  ir jÃ¡ grÃ Ã¾ina.
 */
 {
 	cv::Mat imgGrayscale;
@@ -36,7 +37,7 @@ cv::Mat FocusAssessment::convertToGrayscale(cv::Mat *imgOriginal)
 
 double FocusAssessment::getGradientMean(cv::Mat *imgGradient)
 /**
-* Apskaièiuoja matricos vidurká ir já gràşina.
+* ApskaiÃ¨iuoja matricos vidurkÃ¡ ir jÃ¡ grÃ Ã¾ina.
 */
 {
 	cv::Scalar meanValue = cv::mean(*imgGradient);
@@ -45,7 +46,7 @@ double FocusAssessment::getGradientMean(cv::Mat *imgGradient)
 
 cv::Mat FocusAssessment::applySobelOperator(cv::Mat *imgGrayscale) // Sobel operation makes gradient map (O)
 /**
-* Pritaiko Sobelio filtrà ir gràşina matricà.
+* Pritaiko Sobelio filtrÃ  ir grÃ Ã¾ina matricÃ .
 */
 {
 	cv::Mat imgSobel;
@@ -73,8 +74,8 @@ cv::Mat FocusAssessment::applySobelOperator(cv::Mat *imgGrayscale) // Sobel oper
 
 std::vector<float> FocusAssessment::getFocusMeasures(std::string &path)
 /**
-* Ávykdo dokumentacijoje aprağytà fokuso algoritmà ir
-* gràşina nuotraukos áverèius vektoriuje.
+* Ãvykdo dokumentacijoje apraÃ°ytÃ  fokuso algoritmÃ  ir
+* grÃ Ã¾ina nuotraukos Ã¡verÃ¨ius vektoriuje.
 */
 {
 	cv::Mat imgOriginal;
@@ -112,7 +113,7 @@ std::vector<float> FocusAssessment::getFocusMeasures(std::string &path)
 	//srand(time(0)); // Seed random name generator
 	//SingletonUtilities::Instance()->SaveImage("images/", &imgCropped);
 
-	SingletonUtilities::Instance()->DisplayImage("imgOriginal", &imgOriginal); // THIS IS FOR DEBUGGING
+	//SingletonUtilities::Instance()->DisplayImage("imgOriginal", &imgOriginal); // THIS IS FOR DEBUGGING
 	// Output
 	/*std::printf("FM1: %f\nFM2: %f\nFM3: %f\n", FM1, FM2, FM3);
 	SingletonUtilities::Instance()->DisplayImage("imgCropped", &imgCropped);
@@ -124,22 +125,52 @@ std::vector<float> FocusAssessment::getFocusMeasures(std::string &path)
 
 void FocusAssessment::setFocusClassifierData()
 /**
-* Apsimokinimo metodas. Árağo nuotraukos iverèius á vektoriø.
+* Apsimokinimo metodas. Ä®raÅ¡o nuotraukos Ä¯verÄius Ä¯ failÄ….
 */
 {
-	imagePool = namesAndQualityOfImages.size();
+	/*imagePool = namesAndQualityOfImages.size();
 	for (int i = 0; i < imagePool; i++)
 	{
 		// Sets 3 quality numbers to vector
 		gradesOfImages.push_back(getFocusMeasures(namesAndQualityOfImages[i][o.path]));
 		//std::cout << "read: " << namesAndQualityOfImages[i][0] << std::endl; // OUTPUT IS FOR DEBUGGING
+	}*/
+	std::ofstream output;
+	output.open("./qualityParameters/parametersFocus.txt");
+	imagePool = namesAndQualityOfImages.size();
+	for (int i = 0; i < imagePool; i++)
+	{
+		gradesOfImages.push_back(getFocusMeasures(namesAndQualityOfImages[i][o.path]));
+		//std::cout << "read: " << namesAndQualityOfImages[i][0] << std::endl; // OUTPUT IS FOR DEBUGGING
+		output << gradesOfImages[i][o.FM1] << " " << gradesOfImages[i][o.FM2] << " " << gradesOfImages[i][o.FM3] << std::endl;
 	}
+	output.close();
+}
+
+void FocusAssessment::getFocusClassifierData()
+/**
+* Nuskaitymo metodas. Ä®raÅ¡o nuotraukos Ä¯verÄius Ä¯ vektoriÅ³.
+*/
+{
+	std::ifstream parameters;
+	float FM1;
+	float FM2;
+	float FM3;
+	parameters.open("./qualityParameters/parametersFocus.txt");
+	while (!parameters.eof())
+	{
+		parameters >> FM1;
+		parameters >> FM2;
+		parameters >> FM3;
+		gradesOfImages.push_back({FM1, FM2, FM3});
+	}
+	parameters.close();
 }
 
 void FocusAssessment::mostMatchesInNearest(std::vector<std::vector<float>> &distances, std::vector<float> &focusMeasures, int nearestPool)
 /**
-* Metodas, kuris apskaièiuoja şodiná nuotraukos ávertá
-* pagal didşiausià kieká iğ artimiausiø nearestPool.
+* Metodas, kuris apskaiÃ¨iuoja Ã¾odinÃ¡ nuotraukos Ã¡vertÃ¡
+* pagal didÃ¾iausiÃ  kiekÃ¡ iÃ° artimiausiÃ¸ nearestPool.
 */
 {
 	int count_good = 0;
@@ -186,9 +217,9 @@ void FocusAssessment::mostMatchesInNearest(std::vector<std::vector<float>> &dist
 
 void FocusAssessment::setDistancesFromOriginal(std::vector<std::vector<float>> &distances, std::vector<float> &original) // Rodykles i kintamuosius
 /**
-* Metodas paskaièiuoja apsimokinimo nuotraukø atstumus
-* nuo paduotos nuotraukos. Taip pat árağo şodiná nuotraukos
-* ávertá.
+* Metodas paskaiÃ¨iuoja apsimokinimo nuotraukÃ¸ atstumus
+* nuo paduotos nuotraukos. Taip pat Ã¡raÃ°o Ã¾odinÃ¡ nuotraukos
+* Ã¡vertÃ¡.
 */
 {
 	// Goes through all pictures
@@ -211,9 +242,9 @@ void FocusAssessment::setDistancesFromOriginal(std::vector<std::vector<float>> &
 
 std::vector<float> FocusAssessment::GetFocusQuality(std::string path)
 /**
-* Metodas, kuris apskaièiuoja duotos nuotraukos áverèius
-* priklausomai nuo apsimokinimo duomenø ir gràşina rezultatà
-* kartu su şodiniu áverèiu.
+* Metodas, kuris apskaiÃ¨iuoja duotos nuotraukos Ã¡verÃ¨ius
+* priklausomai nuo apsimokinimo duomenÃ¸ ir grÃ Ã¾ina rezultatÃ 
+* kartu su Ã¾odiniu Ã¡verÃ¨iu.
 */
 {
 	std::vector<std::vector<float>> distances;
