@@ -170,7 +170,7 @@ std::vector<float> ContrastAssesment::getContrastMeasures(std::string &path)
 */
 {
 	cv::Mat imgOriginal;
-	cv::Mat imgColorMap;
+	cv::Mat imgHSV;
 	cv::Mat imgCropped;
 	cv::Mat imgBlurred;
 	float idealPercentage = 6.25;
@@ -186,15 +186,15 @@ std::vector<float> ContrastAssesment::getContrastMeasures(std::string &path)
 	std::vector<float> contrastMeasures;
 
 	// SHOULD USE COLORMAP (APPLYCOLORMAP)
-	//cv::Mat imgColorMap;
-	//cv::applyColorMap(imgOriginal, imgColorMap, cv::COLORMAP_AUTUMN);
-	//SingletonUtilities::Instance()->DisplayImage("Colormap", &imgColorMap);
+	//cv::Mat imgHSV;
+	//cv::applyColorMap(imgOriginal, imgHSV, cv::COLORMAP_AUTUMN);
+	//SingletonUtilities::Instance()->DisplayImage("Colormap", &imgHSV);
 
 	imgOriginal = SingletonUtilities::Instance()->ReadImage(path);
 	// Should be a colormap image
 	// Should have 1 dimension
-	cv::cvtColor(imgOriginal, imgColorMap, CV_BGR2GRAY); // Grayscale. Should be ColorMap function.
-	imgCropped = SingletonUtilities::Instance()->CropToROI(&imgColorMap);
+	cv::cvtColor(imgOriginal, imgHSV, CV_BGR2HSV);
+	imgCropped = SingletonUtilities::Instance()->CropToROI(&imgHSV);
 	totalPixels = imgCropped.total();
 
 	// Count with original image
