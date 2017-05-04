@@ -2,14 +2,14 @@
 
 ContrastAssesment::ContrastAssesment()
 /**
-* Tuðèias konstruktorius.
+* Tuščias konstruktorius.
 */
 {
 }
 
 ContrastAssesment::ContrastAssesment(std::vector<std::vector<std::string>> &data)
 /**
-* Konstruktorius, kuris automatiðkai apsimokina (visada naudojamas).
+* Konstruktorius, kuris automatiškai apsimokina (visada naudojamas).
 */
 {
 	namesAndContrastOfImages = data;
@@ -71,9 +71,9 @@ void ContrastAssesment::getContrastClassifierData()
 
 std::vector<float> ContrastAssesment::GetContrastQuality(std::string path)
 /**
-* Metodas, kuris apskaièiuoja duotos nuotraukos áverèius
-* priklausomai nuo apsimokinimo duomenø ir gràþina rezultatà
-* kartu su þodiniu áverèiu.
+* Metodas, kuris apskaičiuoja duotos nuotraukos įverčius
+* priklausomai nuo apsimokinimo duomenų ir grąžina rezultatą
+* kartu su žodiniu įverčiu.
 */
 {
 	std::vector<std::vector<float>> distances;
@@ -95,8 +95,8 @@ std::vector<float> ContrastAssesment::GetContrastQuality(std::string path)
 
 void ContrastAssesment::mostMatchesInNearest(std::vector<std::vector<float>> &distances, std::vector<float> &focusMeasures, int nearestPool)
 /**
-* Metodas, kuris apskaièiuoja þodiná nuotraukos ávertá
-* pagal didþiausià kieká ið artimiausiø nearestPool.
+* Metodas, kuris apskaičiuoja žodinį nuotraukos įvertį
+* pagal didžiausią kiekį iš artimiausių nearestPool.
 */
 {
 	int count_low = 0;
@@ -134,9 +134,9 @@ void ContrastAssesment::mostMatchesInNearest(std::vector<std::vector<float>> &di
 
 void ContrastAssesment::setDistancesFromOriginal(std::vector<std::vector<float>> &distances, std::vector<float> &original)
 /**
-* Metodas paskaièiuoja apsimokinimo nuotraukø atstumus
-* nuo paduotos nuotraukos. Taip pat áraðo þodiná nuotraukos
-* ávertá.
+* Metodas paskaičiuoja apsimokinimo nuotraukų atstumus
+* nuo paduotos nuotraukos. Taip pat įrašo žodinį nuotraukos
+* įvertį.
 */
 {
 	// FIXME: is this algorithm correct?
@@ -165,8 +165,8 @@ void ContrastAssesment::setDistancesFromOriginal(std::vector<std::vector<float>>
 
 std::vector<float> ContrastAssesment::getContrastMeasures(std::string &path)
 /**
-* Ávykdo dokumentacijoje apraðytà kontrasto algoritmà ir
-* gràþina nuotraukos áverèius vektoriuje.
+* Įvykdo dokumentacijoje aprašytą kontrasto algoritmą ir
+* grąžina nuotraukos įverčius vektoriuje.
 */
 {
 	cv::Mat imgOriginal;
@@ -235,8 +235,8 @@ std::vector<float> ContrastAssesment::getContrastMeasures(std::string &path)
 
 void ContrastAssesment::getPixelCount(cv::Mat *imgSource, std::vector<int> &pixelCount)
 /**
-* Apskaièiuoja kiek yra pikseliø kiekviename ryðkume
-* nuo 0 iki 255 ir áraðo á vektoriø.
+* Apskaičiuoja kiek yra pikselių kiekviename ryškume
+* nuo 0 iki 255 ir įrašo į vektorių.
 */
 {
 	// Go through whole matrix
@@ -252,7 +252,7 @@ void ContrastAssesment::getPixelCount(cv::Mat *imgSource, std::vector<int> &pixe
 
 void ContrastAssesment::setPixelPercentageWithinBin(int* bin, int *totalPixels, std::vector<float> &pixelPercentage, std::vector<int> &pixelCount)
 /**
-* Apskaièiuoja koks visø pikseliø procentas yra kiekviename
+* Apskaičiuoja koks visų pikselių procentas yra kiekviename
 * diapozone bin.
 */
 {
@@ -270,8 +270,8 @@ void ContrastAssesment::setPixelPercentageWithinBin(int* bin, int *totalPixels, 
 
 void ContrastAssesment::applyColorMap()
 /**
-* Metodas, kuris uþdeda ant orginalaus paveikslëlio
-* gero kontrasto kaukæ.
+* Metodas, kuris uždeda ant orginalaus paveikslėlio
+* gero kontrasto kaukę.
 */
 {
 	cv::Mat imgOriginal;

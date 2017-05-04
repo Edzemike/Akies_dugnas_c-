@@ -9,7 +9,7 @@ FocusAssessment::FocusAssessment(std::string imagePath)
 
 FocusAssessment::FocusAssessment(std::vector<std::vector<std::string>> &data)
 /**
-* Konstruktorius, kuris automatiðkai apsimokina (visada naudojamas).
+* Konstruktorius, kuris automatiškai apsimokina (visada naudojamas).
 */
 {
 	namesAndQualityOfImages = data;
@@ -26,7 +26,7 @@ FocusAssessment::~FocusAssessment()
 
 cv::Mat FocusAssessment::convertToGrayscale(cv::Mat *imgOriginal)
 /**
-* Paverèia BGR tipo paveikslëlá á pilkà ir já gràþina.
+* Paverčia BGR tipo paveikslėlį į pilką ir jį grąžina.
 */
 {
 	cv::Mat imgGrayscale;
@@ -37,7 +37,7 @@ cv::Mat FocusAssessment::convertToGrayscale(cv::Mat *imgOriginal)
 
 double FocusAssessment::getGradientMean(cv::Mat *imgGradient)
 /**
-* Apskaièiuoja matricos vidurká ir já gràþina.
+* Apskaičiuoja matricos vidurkį ir jį grąžina.
 */
 {
 	cv::Scalar meanValue = cv::mean(*imgGradient);
@@ -46,7 +46,7 @@ double FocusAssessment::getGradientMean(cv::Mat *imgGradient)
 
 cv::Mat FocusAssessment::applySobelOperator(cv::Mat *imgGrayscale) // Sobel operation makes gradient map (O)
 /**
-* Pritaiko Sobelio filtrà ir gràþina matricà.
+* Pritaiko Sobelio filtrą ir grąžina matricą.
 */
 {
 	cv::Mat imgSobel;
@@ -74,8 +74,8 @@ cv::Mat FocusAssessment::applySobelOperator(cv::Mat *imgGrayscale) // Sobel oper
 
 std::vector<float> FocusAssessment::getFocusMeasures(std::string &path)
 /**
-* Ávykdo dokumentacijoje apraðytà fokuso algoritmà ir
-* gràþina nuotraukos áverèius vektoriuje.
+* Įvykdo dokumentacijoje aprašytą fokuso algoritmą ir
+* grąžina nuotraukos įverčius vektoriuje.
 */
 {
 	cv::Mat imgOriginal;
@@ -169,8 +169,8 @@ void FocusAssessment::getFocusClassifierData()
 
 void FocusAssessment::mostMatchesInNearest(std::vector<std::vector<float>> &distances, std::vector<float> &focusMeasures, int nearestPool)
 /**
-* Metodas, kuris apskaièiuoja þodiná nuotraukos ávertá
-* pagal didþiausià kieká ið artimiausiø nearestPool.
+* Metodas, kuris apskaičiuoja žodinį nuotraukos įvertį
+* pagal didžiausią kiekį iš artimiausių nearestPool.
 */
 {
 	int count_good = 0;
@@ -217,9 +217,9 @@ void FocusAssessment::mostMatchesInNearest(std::vector<std::vector<float>> &dist
 
 void FocusAssessment::setDistancesFromOriginal(std::vector<std::vector<float>> &distances, std::vector<float> &original) // Rodykles i kintamuosius
 /**
-* Metodas paskaièiuoja apsimokinimo nuotraukø atstumus
-* nuo paduotos nuotraukos. Taip pat áraðo þodiná nuotraukos
-* ávertá.
+* Metodas paskaičiuoja apsimokinimo nuotraukų atstumus
+* nuo paduotos nuotraukos. Taip pat įrašo žodinį nuotraukos
+* įvertį.
 */
 {
 	// Goes through all pictures
@@ -242,9 +242,9 @@ void FocusAssessment::setDistancesFromOriginal(std::vector<std::vector<float>> &
 
 std::vector<float> FocusAssessment::GetFocusQuality(std::string path)
 /**
-* Metodas, kuris apskaièiuoja duotos nuotraukos áverèius
-* priklausomai nuo apsimokinimo duomenø ir gràþina rezultatà
-* kartu su þodiniu áverèiu.
+* Metodas, kuris apskaičiuoja duotos nuotraukos įverčius
+* priklausomai nuo apsimokinimo duomenų ir grąžina rezultatą
+* kartu su žodiniu įverčiu.
 */
 {
 	std::vector<std::vector<float>> distances;
