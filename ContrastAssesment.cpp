@@ -42,7 +42,7 @@ void ContrastAssesment::setContrastClassifierData()
 	{
 		gradesOfImages.push_back(getContrastMeasures(namesAndContrastOfImages[i][o.path]));
 		//std::cout << "read: " << namesAndQualityOfImages[i][0] << std::endl; // OUTPUT IS FOR DEBUGGING
-		output << gradesOfImages[i][o.CtM1] << " " << gradesOfImages[i][o.CtM2] << " " << gradesOfImages[i][o.CtM3] << gradesOfImages[i][o.CtM4] << std::endl;
+		output << gradesOfImages[i][o.CtM1] << " " << gradesOfImages[i][o.CtM2] << " " << gradesOfImages[i][o.CtM3] << " " << gradesOfImages[i][o.CtM4] << std::endl;
 	}
 	output.close();
 }
@@ -266,18 +266,4 @@ void ContrastAssesment::setPixelPercentageWithinBin(int* bin, int *totalPixels, 
 		}
 		pixelPercentage[i] = (float)pixelPercentage[i] / *totalPixels * 100;
 	}
-}
-
-void ContrastAssesment::applyColorMap()
-/**
-* Metodas, kuris uždeda ant orginalaus paveikslėlio
-* gero kontrasto kaukę.
-*/
-{
-	cv::Mat imgOriginal;
-	cv::Mat imgColorMap;
-
-	imgOriginal = SingletonUtilities::Instance()->ReadImage("images/image_girl.jpg");
-	// Applies standard COLORMAP_AUTUMN
-	cv::applyColorMap(imgOriginal, imgColorMap, cv::COLORMAP_AUTUMN);
 }
