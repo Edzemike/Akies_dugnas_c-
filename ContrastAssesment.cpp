@@ -57,7 +57,7 @@ void ContrastAssesment::getContrastClassifierData()
 	float CtM2;
 	float CtM3;
 	float CtM4;
-	parameters.open("./qualityParameters/parametersFocus.txt");
+	parameters.open("./qualityParameters/parametersContrast.txt");
 	while (!parameters.eof())
 	{
 		parameters >> CtM1;

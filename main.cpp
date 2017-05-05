@@ -9,14 +9,16 @@ void SetImagesNamesAndContrast(std::vector<std::vector<std::string>>*);
 
 int main()
 {
-	std::cout << "Hello World!\n";
 	std::vector<std::string> sourceImages = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Source");
 	for (int i = 0; i < sourceImages.size(); i++)
 	{
 		sourceImages[i] = "images/Source/" + sourceImages[i];
 	}
-	// Contrast variables
 	std::cout << "Source OK" << std::endl;
+	// Contrast variables
+	cv::Mat imgColorMap;
+	cv::Mat imgBackProjection;
+	imgColorMap = SingletonUtilities::Instance()->ReadImage("images/Contrast/colormap/high.jpg");
 	std::vector<std::vector<std::string>> namesAndContrast;
 	SetImagesNamesAndContrast(&namesAndContrast);
 	ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndContrast);
@@ -44,7 +46,11 @@ int main()
 		// ContrastAssesment must have at least 5 photos in data folder overall.
 		// Then change this line mostMatchesInNearest(distances, contrastMeasures, 1);
 		// In ContrastAssesment.cpp (1 to 5)
-		std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality(sourceImages[i]);
+		cv::Mat imgOriginal = SingletonUtilities::Instance()->ReadImage(sourceImages[i]);
+		imgBackProjection = SingletonUtilities::Instance()->ApplyColorMap(imgOriginal, imgColorMap);
+		SingletonUtilities::Instance()->SaveBackProjection("images/", &imgBackProjection);
+		std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality("images/backprojection.jpg");
+		//std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality(sourceImages[i]);
 
 		std::cout << "\nContrast quality of image is ";
 		contrastQuality[4] == o.high ? printf("high") : printf("low");
@@ -105,6 +111,8 @@ int main()
 	delete objFocusAssessment;
 	delete objColourAssessment;
 	delete objIlluminationAssessment;
+
+	SingletonUtilities::Instance()->DisplayImage("imgBackProjection", &imgBackProjection);
 
 	cv::waitKey(0);
 	return(0);

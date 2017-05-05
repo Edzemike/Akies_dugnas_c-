@@ -59,6 +59,18 @@ void SingletonUtilities::SaveImage(std::string path, cv::Mat *image)
 	cv::imwrite(path + name, *image);
 }
 
+void SingletonUtilities::SaveBackProjection(std::string path, cv::Mat *image)
+{
+	if (path[path.length() - 1] != '/')
+	{
+		std::cout << "error: could note save image because of wrong path\n";
+		_getch();
+		exit(EXIT_FAILURE);
+	}
+
+	cv::imwrite(path + "backprojection.jpg", *image);
+}
+
 cv::Mat SingletonUtilities::ReadImage(std::string path)
 {
 	cv::Mat imgOriginal;
@@ -73,6 +85,7 @@ cv::Mat SingletonUtilities::ReadImage(std::string path)
 	return imgOriginal;
 }
 
+// Apraðytas http://docs.opencv.org/trunk/dc/df6/tutorial_py_histogram_backprojection.html
 cv::Mat SingletonUtilities::ApplyColorMap(cv::Mat imgOriginal, cv::Mat imgColorMap)
 /**
 * Metodas, kuris uþdeda ant originalaus paveikslëlio duotà kaukæ.
@@ -89,8 +102,8 @@ cv::Mat SingletonUtilities::ApplyColorMap(cv::Mat imgOriginal, cv::Mat imgColorM
 	// Applies standard COLORMAP_AUTUMN
 	cv::applyColorMap(imgOriginal, imgColorMap, cv::COLORMAP_AUTUMN);*/
 
-	cv::cvtColor(imgColorMap, imgColorMapHSV, CV_BGR2HSV);
 	cv::cvtColor(imgOriginal, imgOriginalHSV, CV_BGR2HSV);
+	cv::cvtColor(imgColorMap, imgColorMapHSV, CV_BGR2HSV);
 
 	int nimages = 1; // Only 1 image, that is the Mat.
 	int channels[] = { 0 }; // Index for hue channel
@@ -99,15 +112,14 @@ cv::Mat SingletonUtilities::ApplyColorMap(cv::Mat imgOriginal, cv::Mat imgColorM
 	float hranges[] = { 0, 180 }; // hue varies from 0 to 179, see cvtColor
 	float sranges[] = { 0, 256 };
 	const float *ranges[] = { hranges, sranges };
+	double scale = 1;
 
 	// Compute the histogram.
-	cv::calcHist(&imgOriginalHSV, nimages, channels, cv::Mat(), histogram, dims, histSize, ranges, true);
+	cv::calcHist(&imgColorMapHSV, nimages, channels, cv::Mat(), histogram, dims, histSize, ranges, true);
 
 	// Normalize histogram and apply backprojection;
 	cv::normalize(histogram, histogram, 0, 255, cv::NORM_MINMAX);
 
-	double scale = 1;
-	//imgBackProjection = cv::calcBackProject([imgOriginalHSV], [0, 1], histogram, [0, 180, 0, 256], 1);
 	calcBackProject(&imgOriginalHSV, nimages, channels, histogram, imgBackProjection, ranges, scale);
 
 	return imgBackProjection;
