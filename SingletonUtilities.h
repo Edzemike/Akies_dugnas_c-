@@ -49,6 +49,7 @@ public:
 	std::vector<std::string> GetFilesNamesInFolder(std::string folder);
 	void SaveImage(std::string, cv::Mat*);
 	void DisplayImage(std::string, cv::Mat*);
+	cv::Mat ApplyColorMap(cv::Mat, cv::Mat);
 	cv::Mat ReadImage(std::string);
 	cv::Mat ApplyMovingAverageFilter(cv::Mat *imgGrayscale, int filterSize);
 	cv::Mat CropToROI(cv::Mat*);

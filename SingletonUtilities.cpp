@@ -73,6 +73,46 @@ cv::Mat SingletonUtilities::ReadImage(std::string path)
 	return imgOriginal;
 }
 
+cv::Mat SingletonUtilities::ApplyColorMap(cv::Mat imgOriginal, cv::Mat imgColorMap)
+/**
+* Metodas, kuris uþdeda ant originalaus paveikslëlio duotà kaukæ.
+*/
+{
+	cv::Mat imgOriginalHSV;
+	cv::Mat imgColorMapHSV;
+	cv::Mat imgBackProjection;
+	cv::Mat histogram;
+
+
+	// MY STUFF
+	/*imgOriginal = SingletonUtilities::Instance()->ReadImage("images/image_girl.jpg");
+	// Applies standard COLORMAP_AUTUMN
+	cv::applyColorMap(imgOriginal, imgColorMap, cv::COLORMAP_AUTUMN);*/
+
+	cv::cvtColor(imgColorMap, imgColorMapHSV, CV_BGR2HSV);
+	cv::cvtColor(imgOriginal, imgOriginalHSV, CV_BGR2HSV);
+
+	int nimages = 1; // Only 1 image, that is the Mat.
+	int channels[] = { 0 }; // Index for hue channel
+	int dims = 1; // Only 1 channel, the hue channel
+	int histSize[] = { 256 }; // 256 bins
+	float hranges[] = { 0, 180 }; // hue varies from 0 to 179, see cvtColor
+	float sranges[] = { 0, 256 };
+	const float *ranges[] = { hranges, sranges };
+
+	// Compute the histogram.
+	cv::calcHist(&imgOriginalHSV, nimages, channels, cv::Mat(), histogram, dims, histSize, ranges, true);
+
+	// Normalize histogram and apply backprojection;
+	cv::normalize(histogram, histogram, 0, 255, cv::NORM_MINMAX);
+
+	double scale = 1;
+	//imgBackProjection = cv::calcBackProject([imgOriginalHSV], [0, 1], histogram, [0, 180, 0, 256], 1);
+	calcBackProject(&imgOriginalHSV, nimages, channels, histogram, imgBackProjection, ranges, scale);
+
+	return imgBackProjection;
+}
+
 cv::Mat SingletonUtilities::CropToROI(cv::Mat *imgGrayscale)
 {
 	cv::Rect ROI; // Region of interest
