@@ -41,15 +41,11 @@ void ColourAssessment::setColourClassifierData(std::vector<std::string> namesOfI
 }
 
 std::vector<float> ColourAssessment::getColourMeasuresBGR(std::string path)
-/**
-* Metodas apskaičiuojantis spalvos vertinimo matus.
-* Naudojama BGR spalvų skalė. Skalė dalinama į tris intervaus ir pagal tai
-* nustatoma, kuriai grupei priskirti nuotrauką - šviesi, tamsi ar normali.
-*/
 {
 	cv::Mat imgOriginal;
 	std::vector<float> ColourMeasures;
 	float CM1, CM2, CM3;
+	float average = 0;
 	imgOriginal = SingletonUtilities::Instance()->ReadImage(path);
 	int B = 0, D = 0, O = 0; // brigth dark normal
 	int totalPixels = imgOriginal.total();
@@ -58,7 +54,7 @@ std::vector<float> ColourAssessment::getColourMeasuresBGR(std::string path)
 		for (int y = 0; y < imgOriginal.rows; y++) {
 			cv::Vec3b colour = imgOriginal.at<cv::Vec3b>(cv::Point(x, y));
 			int averageColor = (colour.val[0] + colour.val[1] + colour.val[2]) / 3;
-
+			average += averageColor;
 			if (averageColor <= Bmax && averageColor > Omax)
 				B++;
 			else if (averageColor <= Omax && averageColor > Dmax)
@@ -73,12 +69,43 @@ std::vector<float> ColourAssessment::getColourMeasuresBGR(std::string path)
 	CM1 = (float)B / (float)totalPixels;
 	CM2 = (float)D / (float)totalPixels;
 	CM3 = (float)O / (float)totalPixels;
+	average /= (float)totalPixels;
 
 	ColourMeasures.push_back(CM1);
 	ColourMeasures.push_back(CM2);
 	ColourMeasures.push_back(CM3);
+	ColourMeasures.push_back(average);
 
 	return ColourMeasures;
+}
+
+void ColourAssessment::makeBackProjections(std::string path) {
+	cv::Mat imgColorMapBright = SingletonUtilities::Instance()->ReadImage("./images/colour/bright.jpg");
+	cv::Mat imgColorMapDark = SingletonUtilities::Instance()->ReadImage("./images/colour/dark.jpg");
+	cv::Mat imgColorMapNormal = SingletonUtilities::Instance()->ReadImage("./images/colour/normal.jpg");
+	cv::Mat imgCroppedColorMapBright = SingletonUtilities::Instance()->CropToROI(&imgColorMapBright);
+	cv::Mat imgCroppedColorMapDark = SingletonUtilities::Instance()->CropToROI(&imgColorMapDark);
+	cv::Mat imgCroppedColorMapNormal = SingletonUtilities::Instance()->CropToROI(&imgColorMapNormal);
+/*	cv::Mat imgHSVCroppedColorMapBright;
+	cv::Mat imgHSVCroppedColorMapDark;
+	cv::Mat imgHSVCroppedColorMapNormal;
+	cv::cvtColor(imgCroppedColorMapBright, imgHSVCroppedColorMapBright, cv::COLOR_BGR2HSV);
+	cv::cvtColor(imgCroppedColorMapDark, imgHSVCroppedColorMapDark, cv::COLOR_BGR2HSV);
+	cv::cvtColor(imgCroppedColorMapNormal, imgHSVCroppedColorMapDark, cv::COLOR_BGR2HSV);*/
+
+	cv::Mat imgOriginal;
+	cv::Mat imgCropped;
+//	cv::Mat imgHSV;
+	imgOriginal = SingletonUtilities::Instance()->ReadImage(path);
+	imgCropped = SingletonUtilities::Instance()->CropToROI(&imgOriginal);
+//	cv::cvtColor(imgCropped, imgHSV, cv::COLOR_BGR2HSV);
+
+	cv::Mat imgBackProjectionBright = SingletonUtilities::Instance()->ApplyColorMap(imgOriginal, imgCroppedColorMapBright);
+	SingletonUtilities::Instance()->SaveBackProjection("images/Colour/bb/", &imgBackProjectionBright);
+	cv::Mat imgBackProjectionDark = SingletonUtilities::Instance()->ApplyColorMap(imgOriginal, imgCroppedColorMapDark);
+	SingletonUtilities::Instance()->SaveBackProjection("images/Colour/bd/", &imgBackProjectionDark);
+	cv::Mat imgBackProjectionNormal = SingletonUtilities::Instance()->ApplyColorMap(imgOriginal, imgCroppedColorMapNormal);
+	SingletonUtilities::Instance()->SaveBackProjection("images/Colour/bn/", &imgBackProjectionNormal);
 }
 
 std::vector<float> ColourAssessment::getColourMeasuresHSV(std::string path)
@@ -87,7 +114,6 @@ std::vector<float> ColourAssessment::getColourMeasuresHSV(std::string path)
 * Naudojama HSV spalvų skalė. (Alternatyvus metodas getColourMeasuresBGR)
 */
 {
-
 	cv::Mat imgOriginal;
 	cv::Mat imgCropped;
 	cv::Mat imgHSV;

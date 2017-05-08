@@ -23,6 +23,7 @@ public:
 	std::vector<float> getColourMeasuresBGR(std::string); // was private
 	std::vector<float> getColourMeasuresHSV(std::string);
 	std::string getColourQuality(std::vector<float> mesurements);
+	void makeBackProjections(std::string path);
 private:
 	int imagePool;
 	int Bmax = 255, Omax = 170, Dmax = 85;

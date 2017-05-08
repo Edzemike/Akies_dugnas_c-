@@ -61,9 +61,20 @@ int main()
 		std::cout << "Focus quality of image is ";
 		focusQuality[3] == o.good ? printf("good") : focusQuality[3] == o.normal ? printf("normal") : printf("bad");
 		std::cout << std::endl;
-
+		
 		std::vector<float> colourQuality = objColourAssessment->getColourMeasuresHSV(sourceImages[i]);
-		std::cout << "Color quality mostly resembles: " << objColourAssessment->getColourQuality(colourQuality);
+		objColourAssessment->makeBackProjections(sourceImages[i]);
+		std::vector<float> colourQuality1 = objColourAssessment->getColourMeasuresBGR("./images/Colour/bb/backprojection.jpg");
+		std::vector<float> colourQuality2 = objColourAssessment->getColourMeasuresBGR("./images/Colour/bd/backprojection.jpg");
+		std::vector<float> colourQuality3 = objColourAssessment->getColourMeasuresBGR("./images/Colour/bn/backprojection.jpg");
+		std::cout << "Color quality mostly resembles 0: " << objColourAssessment->getColourQuality(colourQuality);
+	/*	std::cout << "\nColor quality mostly resembles 1: " << objColourAssessment->getColourQuality(colourQuality1);
+		std::cout << "\nColor quality mostly resembles 2: " << objColourAssessment->getColourQuality(colourQuality2);
+		std::cout << "\nColor quality mostly resembles 3: " << objColourAssessment->getColourQuality(colourQuality3);*/
+		std::cout << "\nColor quality is: ";
+		if (colourQuality1[3] > colourQuality2[3] && colourQuality1[3] > colourQuality3[3]) std::cout << "bright";
+		if (colourQuality2[3] > colourQuality1[3] && colourQuality2[3] > colourQuality3[3]) std::cout << "dark";
+		if (colourQuality3[3] > colourQuality2[3] && colourQuality3[3] > colourQuality1[3]) std::cout << "normal";
 
 		std::vector<float> illuminationQuality = objIlluminationAssessment->getIlluminationMeasuresBGR(sourceImages[i]);
 		std::cout << "\nIllumination quality mostly resembles: " << objIlluminationAssessment->getIlluminationQuality(illuminationQuality);
