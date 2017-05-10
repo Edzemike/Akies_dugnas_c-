@@ -87,7 +87,6 @@ std::vector<float> ColourAssessment::getColourMeasuresHSV(std::string path)
 * Naudojama HSV spalvų skalė. (Alternatyvus metodas getColourMeasuresBGR)
 */
 {
-
 	cv::Mat imgOriginal;
 	cv::Mat imgCropped;
 	cv::Mat imgHSV;

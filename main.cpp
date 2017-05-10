@@ -112,7 +112,7 @@ int main()
 	delete objColourAssessment;
 	delete objIlluminationAssessment;
 
-	SingletonUtilities::Instance()->DisplayImage("imgBackProjection", &imgBackProjection);
+	//SingletonUtilities::Instance()->DisplayImage("imgBackProjection", &imgBackProjection);
 
 	cv::waitKey(0);
 	return(0);
