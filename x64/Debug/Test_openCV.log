@@ -1,0 +1,86 @@
+﻿  main.cpp
+  ColourAssessment.cpp
+c:\users\visi\desktop\akiesdugnovaizduanalize\akies_dugnas_c-\colourassessment.cpp(34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\visi\desktop\akiesdugnovaizduanalize\akies_dugnas_c-\colourassessment.cpp(55): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\visi\desktop\akiesdugnovaizduanalize\akies_dugnas_c-\colourassessment.cpp(99): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  Test_openCV.vcxproj -> C:\Users\visi\Desktop\akiesDugnoVaizduAnalize\Akies_dugnas_c-\x64\Debug\Test_openCV.exe
+  Test_openCV.vcxproj -> C:\Users\visi\Desktop\akiesDugnoVaizduAnalize\Akies_dugnas_c-\x64\Debug\Test_openCV.pdb (Partial PDB)
+  Source OK
+  Contrast OK
+  Focus OK
+  Color OK
+  Illumination OK
+  
+  Quality measures for image images/Source/high.jpg
+  
+  Contrast quality of image is high
+  Focus quality of image is good
+  Color quality mostly resembles: normal.jpg
+  Illumination quality mostly resembles: even.jpg
+  Quality measures of image are:
+  Contrast:  144.526 6 0 135.332
+  Focus:  7.51907 0.794959 0.847644
+  Color:  0.0872343 0.241448 0.671318
+  Illumination:  68.8234 66.3154 25.7735 40.0294
+  This image is gradable
+  
+  
+  Quality measures for image images/Source/image3.JPG
+  
+  Contrast quality of image is low
+  Focus quality of image is good
+  Color quality mostly resembles: normal.jpg
+  Illumination quality mostly resembles: even.jpg
+  Quality measures of image are:
+  Contrast:  174.927 9 1 171.677
+  Focus:  6.26469 2.84001 1.31088
+  Color:  0.0287376 0.29475 0.676512
+  Illumination:  58.8913 57.3356 28.5926 39.2505
+  This image is ungradable
+  
+  
+  Quality measures for image images/Source/image_bad.JPG
+  
+  Contrast quality of image is low
+  Focus quality of image is bad
+  Color quality mostly resembles: dark.jpg
+  Illumination quality mostly resembles: even.jpg
+  Quality measures of image are:
+  Contrast:  181.563 7 3 164.327
+  Focus:  29.6807 17.6352 5.62494
+  Color:  0.0440285 0.666783 0.289189
+  Illumination:  53.5233 43.8274 61.6783 52.839
+  This image is ungradable
+  
+  
+  Quality measures for image images/Source/image_good.JPG
+  
+  Contrast quality of image is low
+  Focus quality of image is good
+  Color quality mostly resembles: normal.jpg
+  Illumination quality mostly resembles: even.jpg
+  Quality measures of image are:
+  Contrast:  174.848 9 1 166.087
+  Focus:  6.09952 2.50406 1.13644
+  Color:  0.3361 0.289713 0.374187
+  Illumination:  90.7574 86.6585 42.5039 59.6561
+  This image is ungradable
+  
+  
+  Quality measures for image images/Source/image_normal.JPG
+  
+  Contrast quality of image is low
+  Focus quality of image is normal
+  Color quality mostly resembles: bright.jpg
+  Illumination quality mostly resembles: even.jpg
+  Quality measures of image are:
+  Contrast:  174.819 10 1 165.821
+  Focus:  4.43735 1.03982 0.689304
+  Color:  0.47437 0.290221 0.235409
+  Illumination:  101.694 94.4724 52.0204 69.0965
+  This image is ungradable
+  
+  
+  ***** VIDEOINPUT LIBRARY - 0.1995 - TFW07 *****
+  
