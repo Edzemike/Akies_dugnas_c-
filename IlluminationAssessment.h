@@ -24,6 +24,7 @@ public:
 	std::vector<float> GetIlluminationQuality(std::string);
 	std::string getIlluminationQuality(std::vector<float> mesurements);
 	std::vector<float> getIlluminationMeasuresBGR(std::string);
+	void makeBackProjections(std::string path);
 private:
 	int imagePool;
 	std::vector<std::string> namesOfImages;

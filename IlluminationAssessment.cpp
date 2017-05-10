@@ -38,7 +38,35 @@ void IlluminationAssessment::setIlluminationClassifierData()
 
 	}
 }
+void IlluminationAssessment::makeBackProjections(std::string path) 
+/**
+* Padaro backprojection su even.jpg ir uneven.jpg nuotraukomis ir issaugo naujus gautus paveikslėlius,
+* kurie vėliau bus naudojami kokybės nustatymui.
+*/
+{
+	cv::Mat imgIlluminationMapEven = SingletonUtilities::Instance()->ReadImage("./images/Illumination/even.jpg");
+	cv::Mat imgIlluminationMapUneven = SingletonUtilities::Instance()->ReadImage("./images/Illumination/uneven.jpg");
+	cv::Mat imgCroppedIlluminationMapEven = SingletonUtilities::Instance()->CropToROI(&imgIlluminationMapEven);
+	cv::Mat imgCroppedIlluminationMapUneven = SingletonUtilities::Instance()->CropToROI(&imgIlluminationMapUneven);
+	/*	cv::Mat imgHSVCroppedIlluminationMapBright;
+	cv::Mat imgHSVCroppedIlluminationMapDark;
+	cv::Mat imgHSVCroppedIlluminationMapNormal;
+	cv::cvtIllumination(imgCroppedIlluminationMapBright, imgHSVCroppedIlluminationMapBright, cv::Illumination_BGR2HSV);
+	cv::cvtIllumination(imgCroppedIlluminationMapDark, imgHSVCroppedIlluminationMapDark, cv::Illumination_BGR2HSV);
+	cv::cvtIllumination(imgCroppedIlluminationMapNormal, imgHSVCroppedIlluminationMapDark, cv::Illumination_BGR2HSV);*/
 
+	cv::Mat imgOriginal;
+	cv::Mat imgCropped;
+	//	cv::Mat imgHSV;
+	imgOriginal = SingletonUtilities::Instance()->ReadImage(path);
+	imgCropped = SingletonUtilities::Instance()->CropToROI(&imgOriginal);
+	//	cv::cvtIllumination(imgCropped, imgHSV, cv::Illumination_BGR2HSV);
+
+	cv::Mat imgBackProjectionEven = SingletonUtilities::Instance()->ApplyColorMap(imgOriginal, imgCroppedIlluminationMapEven);
+	SingletonUtilities::Instance()->SaveBackProjection("images/Illumination/eb/", &imgBackProjectionEven);
+	cv::Mat imgBackProjectionUneven = SingletonUtilities::Instance()->ApplyColorMap(imgOriginal, imgCroppedIlluminationMapUneven);
+	SingletonUtilities::Instance()->SaveBackProjection("images/Illumination/ub/", &imgBackProjectionUneven);
+}
 std::vector<float> IlluminationAssessment::getIlluminationMeasuresBGR(std::string path)
 /**
 * Metodas apskaičiuojantis apšvietimo vertinimo matus.

@@ -68,16 +68,27 @@ int main()
 		std::vector<float> colourQuality2 = objColourAssessment->getColourMeasuresBGR("./images/Colour/bd/backprojection.jpg");
 		std::vector<float> colourQuality3 = objColourAssessment->getColourMeasuresBGR("./images/Colour/bn/backprojection.jpg");
 		std::cout << "Color quality mostly resembles 0: " << objColourAssessment->getColourQuality(colourQuality);
-	/*	std::cout << "\nColor quality mostly resembles 1: " << objColourAssessment->getColourQuality(colourQuality1);
+		std::cout << "\nColor quality mostly resembles 1: " << objColourAssessment->getColourQuality(colourQuality1);
 		std::cout << "\nColor quality mostly resembles 2: " << objColourAssessment->getColourQuality(colourQuality2);
-		std::cout << "\nColor quality mostly resembles 3: " << objColourAssessment->getColourQuality(colourQuality3);*/
+		std::cout << "\nColor quality mostly resembles 3: " << objColourAssessment->getColourQuality(colourQuality3);
 		std::cout << "\nColor quality is: ";
 		if (colourQuality1[3] > colourQuality2[3] && colourQuality1[3] > colourQuality3[3]) std::cout << "bright";
 		if (colourQuality2[3] > colourQuality1[3] && colourQuality2[3] > colourQuality3[3]) std::cout << "dark";
 		if (colourQuality3[3] > colourQuality2[3] && colourQuality3[3] > colourQuality1[3]) std::cout << "normal";
 
 		std::vector<float> illuminationQuality = objIlluminationAssessment->getIlluminationMeasuresBGR(sourceImages[i]);
+		objIlluminationAssessment->makeBackProjections(sourceImages[i]);
+		std::vector<float> illuminationQuality1 = objIlluminationAssessment->getIlluminationMeasuresBGR("./images/Illumination/eb/backprojection.jpg");
+		std::vector<float> illuminationQuality2 = objIlluminationAssessment->getIlluminationMeasuresBGR("./images/Illumination/ub/backprojection.jpg");
 		std::cout << "\nIllumination quality mostly resembles: " << objIlluminationAssessment->getIlluminationQuality(illuminationQuality);
+		std::cout << "\nIllumination quality mostly resembles 1: " << objIlluminationAssessment->getIlluminationQuality(illuminationQuality1);
+		std::cout << "\nIllumination quality mostly resembles 2: " << objIlluminationAssessment->getIlluminationQuality(illuminationQuality2);
+		std::cout << "\nIllumination quality is 1: ";
+		if (illuminationQuality1[1] > colourQuality2[1]) std::cout << "even";
+		else std::cout << "uneven";
+		std::cout << "\nIllumination quality is 2: ";
+		if (illuminationQuality2[1] < colourQuality1[1]) std::cout << "even";
+		else std::cout << "uneven";
 
 		std::cout << "\nQuality measures of image are:" << std::endl;
 		std::cout << "Contrast: ";

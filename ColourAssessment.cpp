@@ -79,7 +79,12 @@ std::vector<float> ColourAssessment::getColourMeasuresBGR(std::string path)
 	return ColourMeasures;
 }
 
-void ColourAssessment::makeBackProjections(std::string path) {
+void ColourAssessment::makeBackProjections(std::string path) 
+/**
+* Padaro backprojection su even.jpg ir uneven.jpg nuotraukomis ir issaugo naujus gautus paveikslėlius,
+* kurie vėliau bus naudojami kokybės nustatymui.
+*/ 
+{
 	cv::Mat imgColorMapBright = SingletonUtilities::Instance()->ReadImage("./images/colour/bright.jpg");
 	cv::Mat imgColorMapDark = SingletonUtilities::Instance()->ReadImage("./images/colour/dark.jpg");
 	cv::Mat imgColorMapNormal = SingletonUtilities::Instance()->ReadImage("./images/colour/normal.jpg");
