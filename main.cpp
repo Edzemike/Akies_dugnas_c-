@@ -9,16 +9,16 @@ void SetImagesNamesAndContrast(std::vector<std::vector<std::string>>*);
 
 int main()
 {
-	std::vector<std::string> sourceImages = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Source");
+	std::vector<std::string> sourceImages = SingletonUtilities::Instance()->GetFilesNamesInFolder("./images/Source");
 	for (int i = 0; i < sourceImages.size(); i++)
 	{
-		sourceImages[i] = "images/Source/" + sourceImages[i];
+		sourceImages[i] = "./images/Source/" + sourceImages[i];
 	}
 	std::cout << "Source OK" << std::endl;
 	// Contrast variables
 	cv::Mat imgColorMap;
 	cv::Mat imgBackProjection;
-	imgColorMap = SingletonUtilities::Instance()->ReadImage("images/Contrast/colormap/high.jpg");
+	imgColorMap = SingletonUtilities::Instance()->ReadImage("./images/Contrast/colormap/high.jpg");
 	std::vector<std::vector<std::string>> namesAndContrast;
 	SetImagesNamesAndContrast(&namesAndContrast);
 	ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndContrast);
@@ -29,11 +29,11 @@ int main()
 	FocusAssessment* objFocusAssessment = new FocusAssessment(namesAndQuality);
 	std::cout << "Focus OK" << std::endl;
 	// Color variables
-	std::vector<std::string> imageNamesColour = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Colour");
+	std::vector<std::string> imageNamesColour = SingletonUtilities::Instance()->GetFilesNamesInFolder("./images/Colour");
 	ColourAssessment* objColourAssessment = new ColourAssessment(imageNamesColour);
 	std::cout << "Color OK" << std::endl;
 	// Illumination variables
-	std::vector<std::string> imageNamesIllumination = SingletonUtilities::Instance()->GetFilesNamesInFolder("images/Illumination");
+	std::vector<std::string> imageNamesIllumination = SingletonUtilities::Instance()->GetFilesNamesInFolder("./images/Illumination");
 	IlluminationAssessment* objIlluminationAssessment = new IlluminationAssessment(imageNamesIllumination);
 	std::cout << "Illumination OK" << std::endl;
 
@@ -49,7 +49,7 @@ int main()
 		cv::Mat imgOriginal = SingletonUtilities::Instance()->ReadImage(sourceImages[i]);
 		imgBackProjection = SingletonUtilities::Instance()->ApplyColorMap(imgOriginal, imgColorMap);
 		SingletonUtilities::Instance()->SaveBackProjection("images/", &imgBackProjection);
-		std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality("images/backprojection.jpg");
+		std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality("./images/backprojection.jpg");
 		//std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality(sourceImages[i]);
 
 		std::cout << "\nContrast quality of image is ";

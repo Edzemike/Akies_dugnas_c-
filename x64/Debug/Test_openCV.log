@@ -1,4 +1,5 @@
-﻿  Test_openCV.vcxproj -> C:\Users\edzem\Desktop\nauja versija\Akies_dugnas_c-\x64\Debug\Test_openCV.exe
+﻿  main.cpp
+  Test_openCV.vcxproj -> C:\Users\edzem\Desktop\nauja versija\Akies_dugnas_c-\x64\Debug\Test_openCV.exe
   Test_openCV.vcxproj -> C:\Users\edzem\Desktop\nauja versija\Akies_dugnas_c-\x64\Debug\Test_openCV.pdb (Partial PDB)
   Source OK
   Contrast OK
@@ -6,7 +7,7 @@
   Color OK
   Illumination OK
   
-  Quality measures for image images/Source/high.jpg
+  Quality measures for image ./images/Source/high.jpg
   
   Contrast quality of image is high
   Focus quality of image is good
@@ -20,7 +21,7 @@
   This image is gradable
   
   
-  Quality measures for image images/Source/image3.JPG
+  Quality measures for image ./images/Source/image3.JPG
   
   Contrast quality of image is low
   Focus quality of image is good
@@ -34,7 +35,7 @@
   This image is ungradable
   
   
-  Quality measures for image images/Source/image_bad.JPG
+  Quality measures for image ./images/Source/image_bad.JPG
   
   Contrast quality of image is low
   Focus quality of image is bad
@@ -48,7 +49,7 @@
   This image is ungradable
   
   
-  Quality measures for image images/Source/image_good.JPG
+  Quality measures for image ./images/Source/image_good.JPG
   
   Contrast quality of image is low
   Focus quality of image is good
@@ -62,7 +63,7 @@
   This image is ungradable
   
   
-  Quality measures for image images/Source/image_normal.JPG
+  Quality measures for image ./images/Source/image_normal.JPG
   
   Contrast quality of image is low
   Focus quality of image is normal

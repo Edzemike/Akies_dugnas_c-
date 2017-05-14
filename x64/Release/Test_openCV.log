@@ -45,12 +45,12 @@ FocusAssesment.cpp(239): warning C4244: 'argument': conversion from 'const int' 
 IlluminationAssessment.cpp(31): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 IlluminationAssessment.cpp(68): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 IlluminationAssessment.cpp(79): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  SingletonUtilities.cpp
   main.cpp
+  SingletonUtilities.cpp
   Generating code
-  10 of 1289 functions ( 0.8%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    6 functions had inline decision re-evaluated but remain unchanged
+  1280 of 1289 functions (99.3%) were compiled, the rest were copied from previous compilation.
+    41 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Test_openCV.vcxproj -> C:\Users\visi\Desktop\akiesDugnoVaizduAnalize\Akies_dugnas_c-\x64\Release\Test_openCV.exe
-  Test_openCV.vcxproj -> C:\Users\visi\Desktop\akiesDugnoVaizduAnalize\Akies_dugnas_c-\x64\Release\Test_openCV.pdb (Full PDB)
+  Test_openCV.vcxproj -> C:\Users\edzem\Desktop\nauja versija\Akies_dugnas_c-\x64\Release\Test_openCV.exe
+  Test_openCV.vcxproj -> C:\Users\edzem\Desktop\nauja versija\Akies_dugnas_c-\x64\Release\Test_openCV.pdb (Full PDB)
