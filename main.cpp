@@ -14,7 +14,7 @@ int main()
 	{
 		sourceImages[i] = "./images/Source/" + sourceImages[i];
 	}
-	std::cout << "Source OK" << std::endl;
+	//std::cout << "Source OK" << std::endl;
 	// Contrast variables
 	cv::Mat imgColorMap;
 	cv::Mat imgBackProjection;
@@ -22,25 +22,25 @@ int main()
 	std::vector<std::vector<std::string>> namesAndContrast;
 	SetImagesNamesAndContrast(&namesAndContrast);
 	ContrastAssesment* objContrastAssessment = new ContrastAssesment(namesAndContrast);
-	std::cout << "Contrast OK" << std::endl;
+	//std::cout << "Contrast OK" << std::endl;
 	// Focus variables
 	std::vector<std::vector<std::string>> namesAndQuality;
 	SetImagesNamesAndQualityFocus(&namesAndQuality);
 	FocusAssessment* objFocusAssessment = new FocusAssessment(namesAndQuality);
-	std::cout << "Focus OK" << std::endl;
+	//std::cout << "Focus OK" << std::endl;
 	// Color variables
 	std::vector<std::string> imageNamesColour = SingletonUtilities::Instance()->GetFilesNamesInFolder("./images/Colour");
 	ColourAssessment* objColourAssessment = new ColourAssessment(imageNamesColour);
-	std::cout << "Color OK" << std::endl;
+	//std::cout << "Color OK" << std::endl;
 	// Illumination variables
 	std::vector<std::string> imageNamesIllumination = SingletonUtilities::Instance()->GetFilesNamesInFolder("./images/Illumination");
 	IlluminationAssessment* objIlluminationAssessment = new IlluminationAssessment(imageNamesIllumination);
-	std::cout << "Illumination OK" << std::endl;
+	//std::cout << "Illumination OK" << std::endl;
 
 	// Reads every image and outputs its' measures
 	for (int i = 0; i < sourceImages.size(); i++)
 	{
-		std::cout << "\nQuality measures for image " << sourceImages[i] << std::endl;
+		//std::cout << "\nQuality measures for image " << sourceImages[i] << std::endl;
 
 		// IMPORTANT:
 		// ContrastAssesment must have at least 5 photos in data folder overall.
@@ -52,59 +52,77 @@ int main()
 		std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality("./images/backprojection.jpg");
 		//std::vector<float> contrastQuality = objContrastAssessment->GetContrastQuality(sourceImages[i]);
 
-		std::cout << "\nContrast quality of image is ";
-		contrastQuality[4] == o.high ? printf("high") : printf("low");
-		std::cout << std::endl;
+		//std::cout << "\nContrast quality of image is ";
+		//contrastQuality[4] == o.high ? printf("high") : printf("low");
+		//std::cout << std::endl;
 
 		std::vector<float> focusQuality = objFocusAssessment->GetFocusQuality(sourceImages[i]);
 
-		std::cout << "Focus quality of image is ";
-		focusQuality[3] == o.good ? printf("good") : focusQuality[3] == o.normal ? printf("normal") : printf("bad");
-		std::cout << std::endl;
+		//std::cout << "Focus quality of image is ";
+		//focusQuality[3] == o.good ? printf("good") : focusQuality[3] == o.normal ? printf("normal") : printf("bad");
+		//std::cout << std::endl;
 
 		std::vector<float> colourQuality = objColourAssessment->getColourMeasuresHSV(sourceImages[i]);
-		std::cout << "Color quality mostly resembles: " << objColourAssessment->getColourQuality(colourQuality);
+		//std::cout << "Color quality mostly resembles: " << objColourAssessment->getColourQuality(colourQuality);
 
 		std::vector<float> illuminationQuality = objIlluminationAssessment->getIlluminationMeasuresBGR(sourceImages[i]);
-		std::cout << "\nIllumination quality mostly resembles: " << objIlluminationAssessment->getIlluminationQuality(illuminationQuality);
+		//std::cout << "\nIllumination quality mostly resembles: " << objIlluminationAssessment->getIlluminationQuality(illuminationQuality);
 
-		std::cout << "\nQuality measures of image are:" << std::endl;
-		std::cout << "Contrast: ";
-		for (int i = 0; i < 4; i++)
+		//std::cout << "\nQuality measures of image are:" << std::endl;
+		
+		//std::cout << std::endl;
+		//std::cout << "Color: ";
+		std::cout << colourQuality[0];
+		for (int i = 1; i < 3; i++)
 		{
-			std::cout << " " << contrastQuality[i];
+			std::cout << "," << colourQuality[i];
 		}
-		std::cout << std::endl;
-		std::cout << "Focus: ";
+		//std::cout << std::endl;
+		//std::cout << "Focus: ";
+		//std::cout << focusQuality[0];
 		for (int i = 0; i < 3; i++)
 		{
-			std::cout << " " << focusQuality[i];
+			std::cout << "," << focusQuality[i];
 		}
-		std::cout << std::endl;
-		std::cout << "Color: ";
-		for (int i = 0; i < 3; i++)
-		{
-			std::cout << " " << colourQuality[i];
-		}
-		std::cout << std::endl;
-		std::cout << "Illumination: ";
+		//std::cout << std::endl;
+		//std::cout << "Illumination: ";
 		for (int i = 0; i < 4; i++)
 		{
-			std::cout << " " << illuminationQuality[i];
+			std::cout << "," << illuminationQuality[i];
 		}
+		//std::cout << "Contrast: ";
+		//std::cout << contrastQuality[0];
+		for (int i = 0; i < 4; i++)
+		{
+			std::cout << "," << contrastQuality[i];
+		}
+
+		std::istringstream ss(objColourAssessment->getColourQuality(colourQuality));
+		std::string token;
+		std::getline(ss, token, '.');
+		std::cout << "," << token;	
+
+	//	std::cout << "Color quality mostly resembles: " << objColourAssessment->getColourQuality(colourQuality);
+		focusQuality[3] == o.good ? printf(",good") : focusQuality[3] == o.normal ? printf(",normal") : printf(",bad");
+		std::istringstream sss(objIlluminationAssessment->getIlluminationQuality(illuminationQuality));
+		//std::string token;
+		std::getline(sss, token, '.');
+		std::cout << "," << token;
+	//	std::cout << "\nIllumination quality mostly resembles: " << objIlluminationAssessment->getIlluminationQuality(illuminationQuality);
+		contrastQuality[4] == o.high ? printf(",high") : printf(",low");
 
 		std::string colorPicture = objColourAssessment->getColourQuality(colourQuality); // Remove after creating grading algorithm
 		std::string illuminationPicture = objIlluminationAssessment->getIlluminationQuality(illuminationQuality); // Remove after creating grading algorithm
 		// FIXME: add grading for Illumination and Color algorithms
 		if (contrastQuality[4] == o.high && (focusQuality[3] == o.good || focusQuality[3] == o.normal) && colorPicture == "normal.jpg" && illuminationPicture == "even.jpg")
 		{
-			std::cout << "\nThis image is gradable" << std::endl;
+			std::cout << ",gradable" << std::endl;
 		}
 		else
 		{
-			std::cout << "\nThis image is ungradable" << std::endl;
+			std::cout << ",ungradable" << std::endl;
 		}
-		std::cout << std::endl;
+		//std::cout << std::endl;
 	}
 
 	delete objContrastAssessment;
@@ -112,7 +130,7 @@ int main()
 	delete objColourAssessment;
 	delete objIlluminationAssessment;
 
-	//SingletonUtilities::Instance()->DisplayImage("imgBackProjection", &imgBackProjection);
+	SingletonUtilities::Instance()->DisplayImage("imgBackProjection", &imgBackProjection);
 
 	cv::waitKey(0);
 	return(0);
